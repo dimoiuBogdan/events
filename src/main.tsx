@@ -1,12 +1,20 @@
-import React from "react";
-import ReactDOM from "react-dom/client";
-import App from "./App.tsx";
+import "primereact/resources/primereact.min.css";
+import "primereact/resources/themes/lara-light-blue/theme.css";
 import "./index.css";
 
-import "primereact/resources/primereact.min.css"; //core css
+import { PrimeReactProvider } from "primereact/api";
+import { StrictMode } from "react";
+import ReactDOM from "react-dom/client";
+import { Provider as ReduxProvider } from "react-redux";
+import App from "./App.tsx";
+import { store } from "./redux/store.ts";
 
 ReactDOM.createRoot(document.getElementById("root")!).render(
-  <React.StrictMode>
-    <App />
-  </React.StrictMode>
+  <StrictMode>
+    <ReduxProvider store={store}>
+      <PrimeReactProvider>
+        <App />
+      </PrimeReactProvider>
+    </ReduxProvider>
+  </StrictMode>
 );

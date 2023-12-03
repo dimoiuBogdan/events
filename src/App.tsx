@@ -1,5 +1,14 @@
+import { BrowserRouter } from "react-router-dom";
+import AppRoutes from "./routes/AppRoutes";
+
 const App = () => {
-  return <div className="bg-zinc-600 min-h-screen text-white"></div>;
+  return (
+    <div className="min-h-screen px-2 text-primary">
+      <BrowserRouter basename="/">
+        <AppRoutes />
+      </BrowserRouter>
+    </div>
+  );
 };
 
 export default App;
