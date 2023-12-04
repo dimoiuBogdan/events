@@ -1,4 +1,4 @@
-import { useAppDispatch, useAppSelector } from "../redux/hooks";
+import { useAppDispatch, useAppSelector } from "../../redux/hooks";
 import { LandingPageReducerActions } from "./data/reducers/landing.page.reducer.actions";
 
 const LandingPage = () => {

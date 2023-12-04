@@ -6,3 +6,10 @@
 body {
   font-family: "Poppins";
 }
+
+* {
+  transition-duration: 150ms;
+  transition-property: all;
+  transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+  user-select: none;
+}
