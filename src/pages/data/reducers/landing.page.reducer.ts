@@ -1,22 +1,22 @@
 import { Reducer, getType } from "typesafe-actions";
 import {
-  HomepageReducerAction,
-  HomepageReducerActions,
+  LandingPageReducerAction,
+  LandingPageReducerActions,
 } from "./landing.page.reducer.actions";
 import {
-  HomepageInitialStateInterface,
-  HomepageReducerInitialState,
+  LandingPageInitialStateInterface,
+  LandingPageReducerInitialState,
 } from "./landing.page.reducer.initialState";
 
-export const homepageReducer: Reducer<
-  HomepageInitialStateInterface,
-  HomepageReducerAction
+export const landingPageReducer: Reducer<
+  LandingPageInitialStateInterface,
+  LandingPageReducerAction
 > = (
-  state: HomepageInitialStateInterface = HomepageReducerInitialState,
-  action: HomepageReducerAction
+  state: LandingPageInitialStateInterface = LandingPageReducerInitialState,
+  action: LandingPageReducerAction
 ) => {
   switch (action.type) {
-    case getType(HomepageReducerActions.setData):
+    case getType(LandingPageReducerActions.setData):
       return {
         ...state,
         data: action.payload,

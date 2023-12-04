@@ -4,5 +4,5 @@ const actions = {
   setData: createAction("setData", (payload: string) => payload)(),
 };
 
-export type HomepageReducerAction = ActionType<typeof actions>;
-export const HomepageReducerActions = actions;
+export type LandingPageReducerAction = ActionType<typeof actions>;
+export const LandingPageReducerActions = actions;

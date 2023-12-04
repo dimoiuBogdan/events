@@ -1,8 +1,8 @@
-export interface HomepageInitialStateInterface {
+export interface LandingPageInitialStateInterface {
   data: string;
 }
 
-export const HomepageReducerInitialState: Readonly<HomepageInitialStateInterface> =
+export const LandingPageReducerInitialState: Readonly<LandingPageInitialStateInterface> =
   {
     data: "Test",
   };
