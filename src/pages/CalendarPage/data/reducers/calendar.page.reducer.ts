@@ -16,10 +16,14 @@ export const calendarPageReducer: Reducer<
   action: CalendarPageReducerAction,
 ) => {
   switch (action.type) {
-    case getType(CalendarPageReducerActions.setMonth):
+    case getType(CalendarPageReducerActions.setSelectedDate):
       return {
         ...state,
-        selectedMonth: action.payload,
+        selectedDate: {
+          month: action.payload.month ?? state.selectedDate.day,
+          year: action.payload.year ?? state.selectedDate.year,
+          day: action.payload.day ?? state.selectedDate.month,
+        },
       };
 
     default:

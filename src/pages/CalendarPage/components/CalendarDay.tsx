@@ -10,6 +10,7 @@ const CalendarDay: FC<Props> = ({ day }) => {
   const isToday =
     dayjs().date() === day.date.date() &&
     dayjs().month() === day.date.month() &&
+    dayjs().year() === day.date.year() &&
     day.isCurrentMonth;
 
   return (

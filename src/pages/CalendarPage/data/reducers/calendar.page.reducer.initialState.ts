@@ -1,10 +1,15 @@
 import dayjs from "dayjs";
+import { CalendarDateType } from "../calendar.page.models";
 
 export interface CalendarPageInitialStateInterface {
-  selectedMonth: number;
+  selectedDate: CalendarDateType;
 }
 
 export const CalendarPageReducerInitialState: Readonly<CalendarPageInitialStateInterface> =
   {
-    selectedMonth: dayjs().month(),
+    selectedDate: {
+      day: dayjs().date(),
+      month: dayjs().month(),
+      year: dayjs().year(),
+    },
   };

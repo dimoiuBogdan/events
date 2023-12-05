@@ -5,15 +5,15 @@ import CalendarMonth from "./CalendarMonth/CalendarMonth";
 import CalendarWeek from "./CalendarWeek";
 
 const Calendar = () => {
-  const { selectedMonth, getDaysOfMonth } = useCalendar();
+  const { selectedDate, getDaysOfMonth } = useCalendar();
 
   const [daysInSelectedMonth, setDaysInSelectedMonth] = useState(
-    getDaysOfMonth(selectedMonth),
+    getDaysOfMonth(selectedDate.month),
   );
 
   useEffect(() => {
-    setDaysInSelectedMonth(getDaysOfMonth(selectedMonth));
-  }, [getDaysOfMonth, selectedMonth]);
+    setDaysInSelectedMonth(getDaysOfMonth(selectedDate.month));
+  }, [getDaysOfMonth, selectedDate]);
 
   return (
     <div className="w-fit">

@@ -1,7 +1,11 @@
 import { ActionType, createAction } from "typesafe-actions";
+import { CalendarDateType } from "../calendar.page.models";
 
 const actions = {
-  setMonth: createAction("setMonth", (payload: number) => payload)(),
+  setSelectedDate: createAction(
+    "setSelectedDate",
+    (payload: Partial<CalendarDateType>) => payload,
+  )(),
 };
 
 export type CalendarPageReducerAction = ActionType<typeof actions>;

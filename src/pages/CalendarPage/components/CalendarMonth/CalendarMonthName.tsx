@@ -7,9 +7,9 @@ import CalendarMonthNameList from "./CalendarMonthNameList";
 const CalendarMonthName = () => {
   const ref = useRef(null);
   const [isOpened, setIsOpened] = useState(false);
-  const { selectedMonth } = useCalendar();
+  const { selectedDate } = useCalendar();
 
-  const formattedMonth = dayjs().month(selectedMonth).format("MMM. YYYY");
+  const formattedMonth = dayjs().month(selectedDate.month).format("MMM. YYYY");
 
   useOnClickOutside(ref, () => setIsOpened(false));
 
