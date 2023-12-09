@@ -1,7 +1,7 @@
 import dayjs from "dayjs";
 import { useRef, useState } from "react";
-import useOnClickOutside from "../../../../common/data/hooks/useOnClickOutside";
-import useCalendar from "../../data/hooks/useCalendar";
+import useOnClickOutside from "../../../../../common/data/hooks/useOnClickOutside";
+import useCalendar from "../../../data/hooks/useCalendar";
 import CalendarMonthNameList from "./CalendarMonthNameList";
 
 const CalendarMonthName = () => {
@@ -9,7 +9,10 @@ const CalendarMonthName = () => {
   const [isOpened, setIsOpened] = useState(false);
   const { selectedDate } = useCalendar();
 
-  const formattedMonth = dayjs().month(selectedDate.month).format("MMM. YYYY");
+  const formattedMonth = dayjs()
+    .month(selectedDate.month)
+    .year(selectedDate.year)
+    .format("MMM. YYYY");
 
   useOnClickOutside(ref, () => setIsOpened(false));
 

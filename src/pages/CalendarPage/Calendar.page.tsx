@@ -1,7 +1,13 @@
-import Calendar from "./components/Calendar";
+import Calendar from "./components/Calendar/Calendar";
+import Events from "./components/Events/Events";
 
 const CalendarPage = () => {
-  return <Calendar />;
+  return (
+    <div className="flex w-fit flex-col gap-y-6">
+      <Calendar />
+      <Events />
+    </div>
+  );
 };
 
 export default CalendarPage;

@@ -1,4 +1,4 @@
-import { getShortWeekDaysNames } from "../data/calendar.page.helper";
+import { getShortWeekDaysNames } from "../../data/calendar.page.helper";
 
 const CalendarDayNames = () => {
   const weekDaysNames = getShortWeekDaysNames();

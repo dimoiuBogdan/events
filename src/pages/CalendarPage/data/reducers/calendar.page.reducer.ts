@@ -20,9 +20,9 @@ export const calendarPageReducer: Reducer<
       return {
         ...state,
         selectedDate: {
-          month: action.payload.month ?? state.selectedDate.day,
-          year: action.payload.year ?? state.selectedDate.year,
-          day: action.payload.day ?? state.selectedDate.month,
+          month: action.payload.month ?? state.selectedDate.month,
+          year: action.payload.year || state.selectedDate.year,
+          day: action.payload.day,
         },
       };
 

@@ -1,13 +1,13 @@
 import { Dispatch, FC, SetStateAction } from "react";
-import { cn } from "../../../../common/data/utils";
-import { getMonthNames } from "../../data/calendar.page.helper";
-import useCalendar from "../../data/hooks/useCalendar";
+import { cn } from "../../../../../common/data/utils";
+import { getMonthNames } from "../../../data/calendar.page.helper";
+import useCalendar from "../../../data/hooks/useCalendar";
 
 type Props = {
   setIsOpened: Dispatch<SetStateAction<boolean>>;
 };
 const CalendarMonthNameList: FC<Props> = ({ setIsOpened }) => {
-  const { handleChangeMonth, selectedDate } = useCalendar();
+  const { handleChangeSelectedDate, selectedDate } = useCalendar();
 
   const months = getMonthNames();
 
@@ -15,7 +15,12 @@ const CalendarMonthNameList: FC<Props> = ({ setIsOpened }) => {
     selectedDate.month === activeMonth;
 
   const handleSelectedMonth = (month: number) => {
-    handleChangeMonth(month);
+    console.log(selectedDate.year);
+
+    handleChangeSelectedDate({
+      month,
+      year: selectedDate.year,
+    });
 
     setIsOpened(false);
   };

@@ -6,7 +6,7 @@ export type CalendarDayType = {
 };
 
 export type CalendarDateType = {
-  day: number;
+  day: number | undefined;
   month: number;
   year: number;
 };

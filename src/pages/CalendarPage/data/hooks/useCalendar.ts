@@ -6,9 +6,10 @@ import { CalendarPageReducerActions } from "../reducers/calendar.page.reducer.ac
 
 type ReturnType = {
   selectedDate: CalendarDateType;
+  isCurrentMonthSelected: boolean;
   incrementMonth: (number: 1 | -1) => void;
-  handleChangeMonth: (number: number) => void;
-  getDaysOfMonth: (month: number) => CalendarDayType[][];
+  getDaysOfMonth: (month: number, year: number) => CalendarDayType[][];
+  handleChangeSelectedDate: (date: Partial<CalendarDateType>) => void;
 };
 const useCalendar = (): ReturnType => {
   const dispatch = useAppDispatch();
@@ -17,33 +18,48 @@ const useCalendar = (): ReturnType => {
     (state) => state.calendarPageReducer.selectedDate,
   );
 
+  const isCurrentMonthSelected =
+    selectedDate.month === dayjs().month() &&
+    selectedDate.year === dayjs().year();
+
   const incrementMonth = (number: 1 | -1) => {
-    const isNextYear = selectedDate.month + number === 12;
-    const isPreviousYear = selectedDate.month + number === -1;
+    const month = dayjs()
+      .month(selectedDate.month + number)
+      .month();
+
+    const year = dayjs()
+      .year(
+        number === 1 && selectedDate.month === 11
+          ? selectedDate.year + 1
+          : number === -1 && selectedDate.month === 0
+            ? selectedDate.year - 1
+            : selectedDate.year,
+      )
+      .year();
 
     dispatch(
       CalendarPageReducerActions.setSelectedDate({
-        month: selectedDate.month + number,
-        year: isNextYear
-          ? selectedDate.year + 1
-          : isPreviousYear
-            ? selectedDate.year - 1
-            : selectedDate.year,
+        month,
+        year,
       }),
     );
   };
 
-  const handleChangeMonth = (number: number) => {
+  const handleChangeSelectedDate = (date: Partial<CalendarDateType>) => {
     dispatch(
       CalendarPageReducerActions.setSelectedDate({
-        month: number,
+        month: date.month,
+        year: date.year,
+        day: date.day,
       }),
     );
   };
 
   const getDaysOfMonth = useCallback(
-    (month: number = dayjs().month()): CalendarDayType[][] => {
-      const year = dayjs().year();
+    (
+      month: number = dayjs().month(),
+      year: number = dayjs().year(),
+    ): CalendarDayType[][] => {
       const firstDayOfTheMonth = dayjs(new Date(year, month)).day();
       const daysInMonth = dayjs(new Date(year, month)).daysInMonth();
 
@@ -80,10 +96,11 @@ const useCalendar = (): ReturnType => {
   );
 
   return {
-    selectedDate,
-    incrementMonth,
-    handleChangeMonth,
     getDaysOfMonth,
+    handleChangeSelectedDate,
+    incrementMonth,
+    isCurrentMonthSelected,
+    selectedDate,
   };
 };
 
