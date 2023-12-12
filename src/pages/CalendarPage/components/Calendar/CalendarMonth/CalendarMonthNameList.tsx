@@ -26,7 +26,7 @@ const CalendarMonthNameList: FC<Props> = ({ setIsOpened }) => {
   };
 
   return (
-    <div className="absolute left-1/2 -translate-x-1/2 transform overflow-hidden rounded-md bg-zinc-700 shadow-lg">
+    <div className="absolute left-1/2 z-10 -translate-x-1/2 transform overflow-hidden rounded-md bg-zinc-700 shadow-lg">
       {months.map((month, index) => (
         <div
           onClick={() => handleSelectedMonth(index)}

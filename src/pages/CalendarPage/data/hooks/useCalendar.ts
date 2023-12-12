@@ -1,8 +1,10 @@
 import dayjs from "dayjs";
 import { useCallback } from "react";
+import { EVENTS } from "../../../../common/data/constants";
 import { useAppDispatch, useAppSelector } from "../../../../redux/hooks";
 import { CalendarDateType, CalendarDayType } from "../calendar.page.models";
 import { CalendarPageReducerActions } from "../reducers/calendar.page.reducer.actions";
+import { EventType } from "./../../components/Events/data/events.models";
 
 type ReturnType = {
   selectedDate: CalendarDateType;
@@ -10,6 +12,8 @@ type ReturnType = {
   incrementMonth: (number: 1 | -1) => void;
   getDaysOfMonth: (month: number, year: number) => CalendarDayType[][];
   handleChangeSelectedDate: (date: Partial<CalendarDateType>) => void;
+  formatDate: (date: Date, format: string) => string;
+  getEventsForSelectedDate: (date: number | undefined) => EventType[];
 };
 const useCalendar = (): ReturnType => {
   const dispatch = useAppDispatch();
@@ -95,12 +99,25 @@ const useCalendar = (): ReturnType => {
     [],
   );
 
+  const getEventsForSelectedDate = (date: number | undefined) => {
+    return EVENTS.filter(
+      (event) =>
+        event.from.getDate() === date &&
+        event.from.getMonth() === selectedDate.month &&
+        event.from.getFullYear() === selectedDate.year,
+    );
+  };
+
+  const formatDate = (date: Date, format: string) => dayjs(date).format(format);
+
   return {
     getDaysOfMonth,
     handleChangeSelectedDate,
     incrementMonth,
     isCurrentMonthSelected,
     selectedDate,
+    formatDate,
+    getEventsForSelectedDate,
   };
 };
 

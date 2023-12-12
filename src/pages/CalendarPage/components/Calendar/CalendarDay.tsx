@@ -8,7 +8,10 @@ type Props = {
   day: CalendarDayType;
 };
 const CalendarDay: FC<Props> = ({ day }) => {
-  const { handleChangeSelectedDate, selectedDate } = useCalendar();
+  const { handleChangeSelectedDate, selectedDate, getEventsForSelectedDate } =
+    useCalendar();
+
+  const eventsForSelectedDate = getEventsForSelectedDate(day.date.date());
 
   const selectedDateIsToday =
     dayjs().date() === day.date.date() &&
@@ -20,22 +23,39 @@ const CalendarDay: FC<Props> = ({ day }) => {
     selectedDate.month === day.date.month() &&
     selectedDate.year === day.date.year();
 
+  const handleSelectDate = () => {
+    if (isSelected) {
+      handleChangeSelectedDate({
+        day: undefined,
+        month: selectedDate.month,
+        year: selectedDate.year,
+      });
+    } else {
+      handleChangeSelectedDate({
+        day: day.date.date(),
+        month: selectedDate.month,
+        year: selectedDate.year,
+      });
+    }
+  };
+
   return (
     <div
-      onClick={() =>
-        handleChangeSelectedDate({
-          day: day.date.date(),
-          month: selectedDate.month,
-          year: selectedDate.year,
-        })
-      }
+      onClick={handleSelectDate}
       className={cn(
-        "flex h-8 w-8 cursor-pointer items-center justify-center rounded-full hover:bg-indigo-300 hover:text-white hover:shadow-md",
+        "relative flex h-8 w-8 cursor-pointer items-center justify-center rounded-full hover:bg-indigo-300 hover:text-white hover:shadow-md",
         selectedDateIsToday ? "bg-purple-400 text-white shadow-md" : "",
         isSelected ? "bg-indigo-400 text-white shadow-md" : "",
         !day.isCurrentMonth ? "text-gray-400" : "",
       )}
     >
+      {eventsForSelectedDate.length ? (
+        <div className="absolute -right-1 -top-1 flex h-3.5 w-3 items-center justify-center rounded-full bg-zinc-800 text-xs font-bold text-orange-500">
+          {eventsForSelectedDate.length}
+        </div>
+      ) : (
+        <></>
+      )}
       {day.date.format("D")}
     </div>
   );
