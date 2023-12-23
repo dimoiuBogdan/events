@@ -1,7 +1,7 @@
 import { FC } from "react";
 import { useAppDispatch } from "../../../../redux/hooks";
 import useCalendar from "../../data/hooks/useCalendar";
-import { ShortEventType } from "./data/events.models";
+import { ShortEventType } from "./data/models/events.models";
 import { EventsReducerActions } from "./data/reducers/events.reducer.actions";
 
 type Props = ShortEventType;

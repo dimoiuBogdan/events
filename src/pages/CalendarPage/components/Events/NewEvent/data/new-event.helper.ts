@@ -1,6 +1,6 @@
-import { NewEventType } from "../../data/events.models";
+import { NewEventType } from "../../data/models/events.models";
 
-export const getNewEventInitialValues = (): NewEventType => {
+export const getNewEventInitialValues = (): Partial<NewEventType> => {
   return {
     contact: "",
     description: "",

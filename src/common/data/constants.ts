@@ -1,4 +1,4 @@
-import { EventType } from "../../pages/CalendarPage/components/Events/data/events.models";
+import { EventType } from "../../pages/CalendarPage/components/Events/data/models/events.models";
 
 export const EVENTS: EventType[] = [
   {
@@ -35,3 +35,5 @@ export const EVENTS: EventType[] = [
     description: "Finalizare tatuaj Heimdall + tatuaj Fenrir pe mana",
   },
 ];
+
+export const BASE_API_URL = "http://localhost:8080";

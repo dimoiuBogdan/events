@@ -1,8 +1,11 @@
 import dayjs from "dayjs";
-import { FC } from "react";
+import { FC, useCallback, useEffect, useState } from "react";
 import { cn } from "../../../../common/data/utils";
-import { CalendarDayType } from "../../data/calendar.page.models";
 import useCalendar from "../../data/hooks/useCalendar";
+import {
+  CalendarDateType,
+  CalendarDayType,
+} from "../../data/models/calendar.page.models";
 
 type Props = {
   day: CalendarDayType;
@@ -10,8 +13,7 @@ type Props = {
 const CalendarDay: FC<Props> = ({ day }) => {
   const { handleChangeSelectedDate, selectedDate, getEventsForSelectedDate } =
     useCalendar();
-
-  const eventsForSelectedDate = getEventsForSelectedDate(day.date.date());
+  const [eventsCount, setEventsCount] = useState(0);
 
   const selectedDateIsToday =
     dayjs().date() === day.date.date() &&
@@ -39,6 +41,22 @@ const CalendarDay: FC<Props> = ({ day }) => {
     }
   };
 
+  const handleGetEventsForSelectedDate = useCallback(async () => {
+    const calendarDate: CalendarDateType = {
+      day: day.date.date(),
+      month: day.date.month(),
+      year: day.date.year(),
+    };
+
+    const events = await getEventsForSelectedDate(calendarDate);
+
+    setEventsCount(events.length);
+  }, [day.date, getEventsForSelectedDate]);
+
+  useEffect(() => {
+    handleGetEventsForSelectedDate();
+  }, [handleGetEventsForSelectedDate]);
+
   return (
     <div
       onClick={handleSelectDate}
@@ -49,12 +67,10 @@ const CalendarDay: FC<Props> = ({ day }) => {
         !day.isCurrentMonth ? "text-gray-400" : "",
       )}
     >
-      {eventsForSelectedDate.length ? (
+      {!!eventsCount && (
         <div className="absolute -right-1 -top-1 flex h-3.5 w-3 items-center justify-center rounded-full bg-zinc-800 text-xs font-bold text-orange-500">
-          {eventsForSelectedDate.length}
+          {eventsCount}
         </div>
-      ) : (
-        <></>
       )}
       {day.date.format("D")}
     </div>

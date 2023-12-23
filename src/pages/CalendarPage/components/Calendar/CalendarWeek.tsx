@@ -1,5 +1,5 @@
 import { FC } from "react";
-import { CalendarDayType } from "../../data/calendar.page.models";
+import { CalendarDayType } from "../../data/models/calendar.page.models";
 import CalendarDay from "./CalendarDay";
 
 type Props = {

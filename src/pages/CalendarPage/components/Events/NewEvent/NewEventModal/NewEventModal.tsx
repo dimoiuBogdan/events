@@ -3,7 +3,7 @@ import { Dispatch, FC, SetStateAction } from "react";
 import Input from "../../../../../../common/components/Form/Input";
 import ModalWrapper from "../../../../../../common/components/ModalWrapper";
 import { EVENTS } from "../../../../../../common/data/constants";
-import { NewEventType } from "../../data/events.models";
+import { NewEventType } from "../../data/models/events.models";
 import { getNewEventInitialValues } from "../data/new-event.helper";
 import { newEventValidationSchema } from "../data/new-event.validation-schema";
 import NewEventModalSubmit from "./NewEventModalSubmit";

@@ -1,8 +1,8 @@
 export type EventType = {
   id: string;
   name: string;
-  from: Date | undefined;
-  to: Date | undefined;
+  from: Date;
+  to: Date;
   description?: string;
   contact?: string;
   location?: string;

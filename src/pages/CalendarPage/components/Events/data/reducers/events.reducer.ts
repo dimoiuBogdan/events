@@ -1,12 +1,12 @@
 import { Reducer, getType } from "typesafe-actions";
 import {
-  EventsInitialStateInterface,
-  EventsReducerInitialState,
-} from "./events.preducer.initialState";
-import {
   EventsReducerAction,
   EventsReducerActions,
 } from "./events.reducer.actions";
+import {
+  EventsInitialStateInterface,
+  EventsReducerInitialState,
+} from "./events.reducer.initialState";
 
 export const eventsReducer: Reducer<
   EventsInitialStateInterface,

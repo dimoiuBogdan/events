@@ -1,10 +1,13 @@
 import dayjs from "dayjs";
 import { useCallback } from "react";
-import { EVENTS } from "../../../../common/data/constants";
 import { useAppDispatch, useAppSelector } from "../../../../redux/hooks";
-import { CalendarDateType, CalendarDayType } from "../calendar.page.models";
+import { EventType } from "../../components/Events/data/models/events.models";
+import { getEventsForCertainDay } from "../../components/Events/data/services/events.services";
+import {
+  CalendarDateType,
+  CalendarDayType,
+} from "../models/calendar.page.models";
 import { CalendarPageReducerActions } from "../reducers/calendar.page.reducer.actions";
-import { EventType } from "./../../components/Events/data/events.models";
 
 type ReturnType = {
   selectedDate: CalendarDateType;
@@ -13,7 +16,7 @@ type ReturnType = {
   getDaysOfMonth: (month: number, year: number) => CalendarDayType[][];
   handleChangeSelectedDate: (date: Partial<CalendarDateType>) => void;
   formatDate: (date: Date, format: string) => string;
-  getEventsForSelectedDate: (date: number | undefined) => EventType[];
+  getEventsForSelectedDate: (date: CalendarDateType) => Promise<EventType[]>;
 };
 const useCalendar = (): ReturnType => {
   const dispatch = useAppDispatch();
@@ -99,13 +102,14 @@ const useCalendar = (): ReturnType => {
     [],
   );
 
-  const getEventsForSelectedDate = (date: number | undefined) => {
-    return EVENTS.filter(
-      (event) =>
-        event.from.getDate() === date &&
-        event.from.getMonth() === selectedDate.month &&
-        event.from.getFullYear() === selectedDate.year,
-    );
+  const getEventsForSelectedDate = async (date: CalendarDateType) => {
+    if (!date.day) return [];
+
+    const mappedDate = new Date(date.year, date.month, date.day);
+
+    const events = await getEventsForCertainDay(mappedDate);
+
+    return events;
   };
 
   const formatDate = (date: Date, format: string) => dayjs(date).format(format);

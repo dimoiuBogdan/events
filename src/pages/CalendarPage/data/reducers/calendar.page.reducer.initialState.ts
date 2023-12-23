@@ -1,5 +1,5 @@
 import dayjs from "dayjs";
-import { CalendarDateType } from "../calendar.page.models";
+import { CalendarDateType } from "../models/calendar.page.models";
 
 export interface CalendarPageInitialStateInterface {
   selectedDate: CalendarDateType;
