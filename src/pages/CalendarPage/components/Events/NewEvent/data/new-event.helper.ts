@@ -4,9 +4,9 @@ export const getNewEventInitialValues = (): Partial<NewEventType> => {
   return {
     contact: "",
     description: "",
-    from: undefined,
+    from_date: undefined,
     location: "",
     name: "",
-    to: undefined,
+    to_date: undefined,
   };
 };

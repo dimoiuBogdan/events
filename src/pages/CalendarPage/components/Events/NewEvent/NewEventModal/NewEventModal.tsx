@@ -2,7 +2,6 @@ import { Form, Formik, FormikHelpers } from "formik";
 import { Dispatch, FC, SetStateAction } from "react";
 import Input from "../../../../../../common/components/Form/Input";
 import ModalWrapper from "../../../../../../common/components/ModalWrapper";
-import { EVENTS } from "../../../../../../common/data/constants";
 import { NewEventType } from "../../data/models/events.models";
 import { getNewEventInitialValues } from "../data/new-event.helper";
 import { newEventValidationSchema } from "../data/new-event.validation-schema";
@@ -20,19 +19,9 @@ const NewEventModal: FC<Props> = ({ setShowNewEventModal }) => {
     values: NewEventType,
     { setSubmitting }: FormikHelpers<NewEventType>,
   ) => {
-    if (!values.from || !values.to) {
+    if (!values.from_date || !values.to_date) {
       return;
     }
-
-    EVENTS.push({
-      name: values.name,
-      description: values.description,
-      contact: values.contact,
-      location: values.location,
-      from: new Date(values.from),
-      to: new Date(values.to),
-      id: Math.random().toString(),
-    });
 
     setSubmitting(false);
     handleCloseModal();
@@ -61,23 +50,23 @@ const NewEventModal: FC<Props> = ({ setShowNewEventModal }) => {
             />
 
             <Input
-              id="from"
-              name="from"
-              label="From"
+              id="from_date"
+              name="from_date"
+              label="From Date"
               type="datetime-local"
               onChange={(value) => {
-                setFieldValue("from", value);
+                setFieldValue("from_date", value);
               }}
               required
             />
 
             <Input
-              id="to"
-              name="to"
-              label="To"
+              id="to_date"
+              name="to_date"
+              label="To Date"
               type="datetime-local"
               onChange={(value) => {
-                setFieldValue("to", value);
+                setFieldValue("to_date", value);
               }}
               required
             />

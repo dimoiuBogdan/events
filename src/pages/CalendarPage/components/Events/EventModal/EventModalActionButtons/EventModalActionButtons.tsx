@@ -1,11 +1,15 @@
+import { FC } from "react";
 import EventModalActionButton from "./EventModalActionButton";
 
-const EventModalActionButtons = () => {
+type Props = {
+  handleCloseModal: () => void;
+};
+const EventModalActionButtons: FC<Props> = ({ handleCloseModal }) => {
   return (
     <div className="mt-6 flex items-center justify-evenly">
       <EventModalActionButton
         backgroundColor="bg-red-500"
-        onClick={() => {}}
+        onClick={handleCloseModal}
         content="Cancel"
       />
       <EventModalActionButton

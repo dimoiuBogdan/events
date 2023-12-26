@@ -17,3 +17,29 @@ export const getEventsForCertainDay = async (
     return [];
   }
 };
+
+export const getEvents = async (): Promise<EventType[]> => {
+  try {
+    const res = await axios.get(`${BASE_API_URL}/events`);
+
+    return res.data;
+  } catch (error) {
+    console.log("ERROR", error);
+
+    return [];
+  }
+};
+
+export const getEventById = async (
+  id: string,
+): Promise<EventType | undefined> => {
+  try {
+    const res = await axios.get(`${BASE_API_URL}/events/${id}`);
+
+    return res.data;
+  } catch (error) {
+    console.log("ERROR", error);
+
+    return undefined;
+  }
+};

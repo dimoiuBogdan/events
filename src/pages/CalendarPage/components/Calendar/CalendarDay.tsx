@@ -1,21 +1,22 @@
 import dayjs from "dayjs";
-import { FC, useCallback, useEffect, useState } from "react";
+import { FC } from "react";
 import { cn } from "../../../../common/data/utils";
+import { useAppSelector } from "../../../../redux/hooks";
 import useCalendar from "../../data/hooks/useCalendar";
-import {
-  CalendarDateType,
-  CalendarDayType,
-} from "../../data/models/calendar.page.models";
+import { CalendarDayType } from "../../data/models/calendar.page.models";
+import { EventsLengthsType } from "../Events/data/models/events.models";
 
 type Props = {
   day: CalendarDayType;
 };
 const CalendarDay: FC<Props> = ({ day }) => {
-  const { handleChangeSelectedDate, selectedDate, getEventsForSelectedDate } =
-    useCalendar();
-  const [eventsCount, setEventsCount] = useState(0);
+  const { handleChangeSelectedDate, selectedDate } = useCalendar();
 
-  const selectedDateIsToday =
+  const eventsLengths = useAppSelector<EventsLengthsType[]>(
+    (s) => s.eventsReducer.eventsLengths,
+  );
+
+  const isToday =
     dayjs().date() === day.date.date() &&
     dayjs().month() === day.date.month() &&
     dayjs().year() === day.date.year();
@@ -24,6 +25,13 @@ const CalendarDay: FC<Props> = ({ day }) => {
     selectedDate.day === day.date.date() &&
     selectedDate.month === day.date.month() &&
     selectedDate.year === day.date.year();
+
+  const currentDayEventsLengths = eventsLengths.find(
+    (event) =>
+      dayjs(event.from_date).date() === day.date.date() &&
+      dayjs(event.from_date).month() === day.date.month() &&
+      dayjs(event.from_date).year() === day.date.year(),
+  )?.events;
 
   const handleSelectDate = () => {
     if (isSelected) {
@@ -41,35 +49,19 @@ const CalendarDay: FC<Props> = ({ day }) => {
     }
   };
 
-  const handleGetEventsForSelectedDate = useCallback(async () => {
-    const calendarDate: CalendarDateType = {
-      day: day.date.date(),
-      month: day.date.month(),
-      year: day.date.year(),
-    };
-
-    const events = await getEventsForSelectedDate(calendarDate);
-
-    setEventsCount(events.length);
-  }, [day.date, getEventsForSelectedDate]);
-
-  useEffect(() => {
-    handleGetEventsForSelectedDate();
-  }, [handleGetEventsForSelectedDate]);
-
   return (
     <div
       onClick={handleSelectDate}
       className={cn(
         "relative flex h-8 w-8 cursor-pointer items-center justify-center rounded-full hover:bg-indigo-300 hover:text-white hover:shadow-md",
-        selectedDateIsToday ? "bg-purple-400 text-white shadow-md" : "",
-        isSelected ? "bg-indigo-400 text-white shadow-md" : "",
-        !day.isCurrentMonth ? "text-gray-400" : "",
+        !!isToday && "bg-purple-400 text-white shadow-md",
+        !!isSelected && "bg-indigo-400 text-white shadow-md",
+        !day.isCurrentMonth && "text-gray-400",
       )}
     >
-      {!!eventsCount && (
+      {!!currentDayEventsLengths && (
         <div className="absolute -right-1 -top-1 flex h-3.5 w-3 items-center justify-center rounded-full bg-zinc-800 text-xs font-bold text-orange-500">
-          {eventsCount}
+          {currentDayEventsLengths}
         </div>
       )}
       {day.date.format("D")}

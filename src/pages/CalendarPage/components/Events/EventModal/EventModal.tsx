@@ -1,9 +1,11 @@
 import { FaPhone } from "react-icons/fa";
+import { useQuery } from "react-query";
 import ModalWrapper from "../../../../../common/components/ModalWrapper";
-import { EVENTS } from "../../../../../common/data/constants";
+import { isRomanianPhoneNumber } from "../../../../../common/data/helpers/helpers";
 import { useAppDispatch, useAppSelector } from "../../../../../redux/hooks";
 import useCalendar from "../../../data/hooks/useCalendar";
 import { EventsReducerActions } from "../data/reducers/events.reducer.actions";
+import { getEventById } from "../data/services/events.services";
 import EventModalActionButtons from "./EventModalActionButtons/EventModalActionButtons";
 
 const EventModal = () => {
@@ -14,17 +16,24 @@ const EventModal = () => {
     (state) => state.eventsReducer.selectedEventId,
   );
 
-  const selectedEvent = EVENTS.find((event) => event.id === selectedEventId);
+  const { data: selectedEvent, isLoading: loadingSelectedEvent } = useQuery({
+    queryKey: ["get-specific-event", selectedEventId],
+    queryFn: async () => {
+      if (!selectedEventId) return;
 
-  const isRomanianPhoneNumber = (phoneNumber: string) => {
-    const regex = /^(\+4|0)(\d{9})$/;
+      const res = await getEventById(selectedEventId);
 
-    return regex.test(phoneNumber);
-  };
+      return res;
+    },
+  });
 
   const handleCloseModal = () => {
     dispatch(EventsReducerActions.selectEvent({ id: undefined }));
   };
+
+  if (loadingSelectedEvent && selectedEventId) {
+    return <div>Loading...</div>;
+  }
 
   if (!selectedEventId || !selectedEvent) return <></>;
 
@@ -35,12 +44,12 @@ const EventModal = () => {
       </div>
       <div className="flex flex-col gap-y-2">
         <div>
-          Date: {formatDate(selectedEvent.from, "DD.MM.YYYY")} -{" "}
-          {formatDate(selectedEvent.to, "DD.MM.YYYY")}
+          Date: {formatDate(selectedEvent.from_date, "DD.MM.YYYY")} -{" "}
+          {formatDate(selectedEvent.to_date, "DD.MM.YYYY")}
         </div>
         <div>
-          Time: {formatDate(selectedEvent.from, "HH:mm")} -{" "}
-          {formatDate(selectedEvent.to, "HH:mm")}
+          Time: {formatDate(selectedEvent.from_date, "HH:mm")} -{" "}
+          {formatDate(selectedEvent.to_date, "HH:mm")}
         </div>
         {selectedEvent.location && (
           <div>Location: {selectedEvent.location}</div>
@@ -66,7 +75,7 @@ const EventModal = () => {
             Description: {selectedEvent.description}
           </div>
         )}
-        <EventModalActionButtons />
+        <EventModalActionButtons handleCloseModal={handleCloseModal} />
       </div>
     </ModalWrapper>
   );
