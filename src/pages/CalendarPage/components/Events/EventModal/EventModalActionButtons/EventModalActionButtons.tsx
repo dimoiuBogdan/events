@@ -3,8 +3,12 @@ import EventModalActionButton from "./EventModalActionButton";
 
 type Props = {
   handleCloseModal: () => void;
+  handleNotify: () => void;
 };
-const EventModalActionButtons: FC<Props> = ({ handleCloseModal }) => {
+const EventModalActionButtons: FC<Props> = ({
+  handleCloseModal,
+  handleNotify,
+}) => {
   return (
     <div className="mt-6 flex items-center justify-evenly">
       <EventModalActionButton
@@ -14,7 +18,7 @@ const EventModalActionButtons: FC<Props> = ({ handleCloseModal }) => {
       />
       <EventModalActionButton
         backgroundColor="bg-green-500"
-        onClick={() => {}}
+        onClick={handleNotify}
         content="Notify"
       />
       <EventModalActionButton
