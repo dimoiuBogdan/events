@@ -31,3 +31,9 @@ export const addEvent = async (event: NewEventType): Promise<EventType> => {
 
   return res.data;
 };
+
+export const removeEvent = async (id: string): Promise<boolean> => {
+  const res = await axios.delete(`${BASE_API_URL}/events/${id}`);
+
+  return res.data;
+};

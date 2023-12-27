@@ -15,7 +15,7 @@ type ReturnType = {
   incrementMonth: (number: 1 | -1) => void;
   getDaysOfMonth: (month: number, year: number) => CalendarDayType[][];
   handleChangeSelectedDate: (date: Partial<CalendarDateType>) => void;
-  formatDate: (date: Date, format: string) => string;
+  formatDate: (date: Date | string, format: string) => string;
   getEventsForSelectedDate: (date: CalendarDateType) => Promise<EventType[]>;
 };
 const useCalendar = (): ReturnType => {
@@ -112,7 +112,8 @@ const useCalendar = (): ReturnType => {
     return events;
   };
 
-  const formatDate = (date: Date, format: string) => dayjs(date).format(format);
+  const formatDate = (date: Date | string, format: string) =>
+    dayjs(date).format(format);
 
   return {
     getDaysOfMonth,

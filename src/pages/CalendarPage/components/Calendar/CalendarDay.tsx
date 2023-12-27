@@ -26,6 +26,8 @@ const CalendarDay: FC<Props> = ({ day }) => {
     selectedDate.month === day.date.month() &&
     selectedDate.year === day.date.year();
 
+  const dateIsInThePast = dayjs().date() > day.date.date();
+
   const currentDayEventsLengths = eventsLengths.find(
     (event) =>
       dayjs(event.from_date).date() === day.date.date() &&
@@ -57,10 +59,16 @@ const CalendarDay: FC<Props> = ({ day }) => {
         !!isToday && "bg-red-400 text-white shadow-md",
         !!isSelected && "bg-indigo-400 text-white shadow-md",
         !day.isCurrentMonth && "text-gray-400",
+        dateIsInThePast && "text-gray-300",
       )}
     >
       {!!currentDayEventsLengths && (
-        <div className="absolute -right-1 -top-1 flex h-3.5 w-3 items-center justify-center rounded-full bg-zinc-800 text-xs font-bold text-orange-500">
+        <div
+          className={cn(
+            "absolute -right-1 -top-1 flex h-3.5 w-3 items-center justify-center rounded-full bg-zinc-800 text-xs font-bold text-orange-500",
+            dateIsInThePast && "text-opacity-60",
+          )}
+        >
           {currentDayEventsLengths}
         </div>
       )}
