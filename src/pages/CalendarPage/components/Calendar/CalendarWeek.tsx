@@ -1,6 +1,6 @@
 import { FC } from "react";
 import { CalendarDayType } from "../../data/models/calendar.page.models";
-import CalendarDay from "./CalendarDay";
+import CalendarDay from "./CalendarDay/components/CalendarDay";
 
 type Props = {
   week: CalendarDayType[];

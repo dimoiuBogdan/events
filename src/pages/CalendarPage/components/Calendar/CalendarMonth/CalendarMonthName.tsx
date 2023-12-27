@@ -7,12 +7,17 @@ import CalendarMonthNameList from "./CalendarMonthNameList";
 const CalendarMonthName = () => {
   const ref = useRef(null);
   const [isOpened, setIsOpened] = useState(false);
-  const { selectedDate } = useCalendar();
+  const { selectedDate, formatDate } = useCalendar();
 
-  const formattedMonth = dayjs()
-    .month(selectedDate.month)
-    .year(selectedDate.year)
-    .format("MMM. YYYY");
+  const getFormattedMonth = () => {
+    const monthAndYear = dayjs()
+      .month(selectedDate.month)
+      .year(selectedDate.year);
+
+    const formattedMonth = formatDate(monthAndYear.toString(), "MMM. YYYY");
+
+    return formattedMonth;
+  };
 
   useOnClickOutside(ref, () => setIsOpened(false));
 
@@ -22,7 +27,7 @@ const CalendarMonthName = () => {
         className="cursor-pointer"
         onClick={() => setIsOpened((prev) => !prev)}
       >
-        {formattedMonth}
+        {getFormattedMonth()}
       </div>
       {isOpened && <CalendarMonthNameList setIsOpened={setIsOpened} />}
     </div>

@@ -14,7 +14,7 @@ const CalendarMonthNameList: FC<Props> = ({ setIsOpened }) => {
   const isActiveMonth = (activeMonth: number) =>
     selectedDate.month === activeMonth;
 
-  const handleSelectedMonth = (month: number) => {
+  const handleChangeMonth = (month: number) => {
     handleChangeSelectedDate({
       month,
       year: selectedDate.year,
@@ -27,7 +27,7 @@ const CalendarMonthNameList: FC<Props> = ({ setIsOpened }) => {
     <div className="absolute left-1/2 z-10 -translate-x-1/2 transform overflow-hidden rounded-md bg-zinc-700 shadow-lg">
       {months.map((month, index) => (
         <div
-          onClick={() => handleSelectedMonth(index)}
+          onClick={() => handleChangeMonth(index)}
           key={index}
           className={cn(
             "cursor-pointer px-3 py-1 hover:bg-indigo-400",

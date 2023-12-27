@@ -1,36 +1,25 @@
 import dayjs from "dayjs";
 import { FaPhone } from "react-icons/fa";
-import { useQuery } from "react-query";
 import ModalWrapper from "../../../../../common/components/ModalWrapper";
 import { isRomanianPhoneNumber } from "../../../../../common/data/helpers/helpers";
 import { formatEmptyValue } from "../../../../../common/data/utils";
-import { useAppDispatch, useAppSelector } from "../../../../../redux/hooks";
+import { useAppSelector } from "../../../../../redux/hooks";
 import useCalendar from "../../../data/hooks/useCalendar";
-import { EventsReducerActions } from "../data/reducers/events.reducer.actions";
-import { getEventById } from "../data/services/events.services";
+import useEvents from "../data/hooks/useEvents";
+import useEventsApi from "../data/hooks/useEvents.api";
 import EventModalActionButtons from "./EventModalActionButtons/EventModalActionButtons";
 
 const EventModal = () => {
-  const dispatch = useAppDispatch();
   const { formatDate } = useCalendar();
+  const { setSelectedEventId } = useEvents();
+  const { selectedEvent, loadingSelectedEvent } = useEventsApi();
 
   const selectedEventId = useAppSelector(
     (state) => state.eventsReducer.selectedEventId,
   );
 
-  const { data: selectedEvent, isLoading: loadingSelectedEvent } = useQuery({
-    queryKey: ["get-specific-event", selectedEventId],
-    queryFn: async () => {
-      if (!selectedEventId) return;
-
-      const res = await getEventById(selectedEventId);
-
-      return res;
-    },
-  });
-
   const handleCloseModal = () => {
-    dispatch(EventsReducerActions.selectEvent({ id: undefined }));
+    setSelectedEventId(undefined);
   };
 
   if (!selectedEventId || !selectedEvent) return <></>;

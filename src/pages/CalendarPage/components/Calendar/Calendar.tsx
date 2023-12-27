@@ -1,6 +1,5 @@
-import { useEffect, useState } from "react";
 import useCalendar from "../../data/hooks/useCalendar";
-import CalendarDayNames from "./CalendarDayNames";
+import CalendarDayNames from "./CalendarDay/components/CalendarDayNames";
 import CalendarMonth from "./CalendarMonth/CalendarMonth";
 import CalendarToday from "./CalendarToday/CalendarToday";
 import CalendarWeek from "./CalendarWeek";
@@ -8,18 +7,13 @@ import CalendarWeek from "./CalendarWeek";
 const Calendar = () => {
   const { selectedDate, getDaysOfMonth } = useCalendar();
 
-  const [daysInSelectedMonth, setDaysInSelectedMonth] = useState(
-    getDaysOfMonth(selectedDate.month, selectedDate.year),
+  const daysInSelectedMonth = getDaysOfMonth(
+    selectedDate.month,
+    selectedDate.year,
   );
 
-  useEffect(() => {
-    setDaysInSelectedMonth(
-      getDaysOfMonth(selectedDate.month, selectedDate.year),
-    );
-  }, [getDaysOfMonth, selectedDate]);
-
   return (
-    <div className="w-fit">
+    <div>
       <div className="flex items-center justify-between">
         <div></div>
         <CalendarMonth />

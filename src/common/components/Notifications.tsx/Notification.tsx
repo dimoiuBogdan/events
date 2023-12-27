@@ -19,7 +19,7 @@ const Notification: FC<Props> = ({ id, index, message, title, type }) => {
 
   const TIMEOUT_MS = 5000;
   const NOTIFICATION_HEIGHT = 64;
-  const MARGIN = 20;
+  const MARGIN = 30;
   const TOP = index * (NOTIFICATION_HEIGHT + MARGIN) + MARGIN;
 
   const getNotificationProperties = () => {

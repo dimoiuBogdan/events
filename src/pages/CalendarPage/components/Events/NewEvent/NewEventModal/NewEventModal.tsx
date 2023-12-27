@@ -1,13 +1,10 @@
 import { Form, Formik, FormikHelpers } from "formik";
 import { Dispatch, FC, SetStateAction } from "react";
-import { useMutation, useQueryClient } from "react-query";
 import Input from "../../../../../../common/components/Form/Input";
 import ModalWrapper from "../../../../../../common/components/ModalWrapper";
-import { NotificationsReducerActions } from "../../../../../../common/components/Notifications.tsx/data/reducers/notifications.reducer.actions";
-import { useAppDispatch, useAppSelector } from "../../../../../../redux/hooks";
 import useCalendar from "../../../../data/hooks/useCalendar";
+import useEventsApi from "../../data/hooks/useEvents.api";
 import { NewEventType } from "../../data/models/events.models";
-import { addEvent } from "../../data/services/events.services";
 import { getNewEventInitialValues } from "../data/new-event.helper";
 import { newEventValidationSchema } from "../data/new-event.validation-schema";
 import NewEventModalSubmit from "./NewEventModalSubmit";
@@ -16,33 +13,13 @@ type Props = {
   setShowNewEventModal: Dispatch<SetStateAction<boolean>>;
 };
 const NewEventModal: FC<Props> = ({ setShowNewEventModal }) => {
-  const dispatch = useAppDispatch();
-  const queryClient = useQueryClient();
-  const { formatDate } = useCalendar();
-
-  const selectedDate = useAppSelector(
-    (s) => s.calendarPageReducer.selectedDate,
-  );
+  const { formatDate, selectedDate } = useCalendar();
+  const { addEventRequest } = useEventsApi();
 
   const parsedInitialFromDate = formatDate(
     new Date(selectedDate.year, selectedDate.month, selectedDate.day),
     "YYYY-MM-DDTHH:mm",
   );
-
-  const addEventRequest = useMutation({
-    mutationFn: async (newEvent: NewEventType) => {
-      await addEvent(newEvent);
-    },
-    onError: () => {
-      dispatch(
-        NotificationsReducerActions.addNotification({
-          type: "error",
-          title: "Failed to add event!",
-          message: "The event could not be added!",
-        }),
-      );
-    },
-  });
 
   const handleCloseModal = () => {
     setShowNewEventModal(false);
@@ -53,20 +30,11 @@ const NewEventModal: FC<Props> = ({ setShowNewEventModal }) => {
     { setSubmitting }: FormikHelpers<NewEventType>,
   ) => {
     addEventRequest.mutate(values, {
-      onSuccess: () => {
-        dispatch(
-          NotificationsReducerActions.addNotification({
-            type: "success",
-            title: "Event added!",
-            message: "The event will now appear in your calendar!",
-          }),
-        );
-
-        queryClient.invalidateQueries("get-all-events");
-        queryClient.invalidateQueries("get-selected-date-events");
-
+      onSettled: () => {
         setSubmitting(false);
-        handleCloseModal();
+      },
+      onSuccess: () => {
+        setShowNewEventModal(false);
       },
     });
   };

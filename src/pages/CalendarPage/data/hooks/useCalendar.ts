@@ -92,8 +92,7 @@ const useCalendar = (): ReturnType => {
 
           week.push({
             date: dayjs(new Date(year, month, startingDate)),
-            isCurrentMonth:
-              !dateExceedingMonth && selectedDate.year === dayjs().year(),
+            isCurrentMonth: !dateExceedingMonth,
           });
         }
 

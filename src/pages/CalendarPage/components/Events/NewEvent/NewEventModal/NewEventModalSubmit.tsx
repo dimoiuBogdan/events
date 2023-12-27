@@ -10,11 +10,9 @@ const NewEventModalSubmit: FC<Props> = ({
   isSubmitting,
   handleCloseModal,
 }) => {
-  isSubmitting = false;
-
   return (
     <div className="mt-2 flex items-center justify-center gap-x-4">
-      {isLoading || isSubmitting ? (
+      {isLoading ? (
         <div>Loading...</div>
       ) : (
         <>

@@ -1,5 +1,5 @@
 import dayjs from "dayjs";
-import CalendarDay from "../CalendarDay";
+import CalendarDay from "../CalendarDay/components/CalendarDay";
 
 const CalendarToday = () => {
   return (
