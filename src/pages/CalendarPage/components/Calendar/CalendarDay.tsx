@@ -8,8 +8,9 @@ import { EventsLengthsType } from "../Events/data/models/events.models";
 
 type Props = {
   day: CalendarDayType;
+  isTodayButton?: boolean;
 };
-const CalendarDay: FC<Props> = ({ day }) => {
+const CalendarDay: FC<Props> = ({ day, isTodayButton }) => {
   const { handleChangeSelectedDate, selectedDate } = useCalendar();
 
   const eventsLengths = useAppSelector<EventsLengthsType[]>(
@@ -26,8 +27,6 @@ const CalendarDay: FC<Props> = ({ day }) => {
     selectedDate.month === day.date.month() &&
     selectedDate.year === day.date.year();
 
-  const dateIsInThePast = dayjs().date() > day.date.date();
-
   const currentDayEventsLengths = eventsLengths.find(
     (event) =>
       dayjs(event.from_date).date() === day.date.date() &&
@@ -36,6 +35,16 @@ const CalendarDay: FC<Props> = ({ day }) => {
   )?.events;
 
   const handleSelectDate = () => {
+    if (isTodayButton) {
+      handleChangeSelectedDate({
+        day: day.date.date(),
+        month: day.date.month(),
+        year: day.date.year(),
+      });
+
+      return;
+    }
+
     if (isSelected) {
       handleChangeSelectedDate({
         day: undefined,
@@ -45,8 +54,8 @@ const CalendarDay: FC<Props> = ({ day }) => {
     } else {
       handleChangeSelectedDate({
         day: day.date.date(),
-        month: selectedDate.month,
-        year: selectedDate.year,
+        month: day.date.month(),
+        year: day.date.year(),
       });
     }
   };
@@ -58,15 +67,13 @@ const CalendarDay: FC<Props> = ({ day }) => {
         "relative flex h-8 w-8 cursor-pointer items-center justify-center rounded-full hover:bg-indigo-300 hover:text-white hover:shadow-md",
         !!isToday && "bg-red-400 text-white shadow-md",
         !!isSelected && "bg-indigo-400 text-white shadow-md",
-        !day.isCurrentMonth && "text-gray-400",
-        dateIsInThePast && "text-gray-300",
+        !day.isCurrentMonth && !isTodayButton && "text-gray-400",
       )}
     >
       {!!currentDayEventsLengths && (
         <div
           className={cn(
             "absolute -right-1 -top-1 flex h-3.5 w-3 items-center justify-center rounded-full bg-zinc-800 text-xs font-bold text-orange-500",
-            dateIsInThePast && "text-opacity-60",
           )}
         >
           {currentDayEventsLengths}

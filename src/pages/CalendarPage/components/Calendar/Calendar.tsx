@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import useCalendar from "../../data/hooks/useCalendar";
 import CalendarDayNames from "./CalendarDayNames";
 import CalendarMonth from "./CalendarMonth/CalendarMonth";
+import CalendarToday from "./CalendarToday/CalendarToday";
 import CalendarWeek from "./CalendarWeek";
 
 const Calendar = () => {
@@ -19,7 +20,11 @@ const Calendar = () => {
 
   return (
     <div className="w-fit">
-      <CalendarMonth />
+      <div className="flex items-center justify-between">
+        <div></div>
+        <CalendarMonth />
+        <CalendarToday />
+      </div>
       <CalendarDayNames />
       {daysInSelectedMonth.map((week, index) => (
         <CalendarWeek key={index} week={week} />
