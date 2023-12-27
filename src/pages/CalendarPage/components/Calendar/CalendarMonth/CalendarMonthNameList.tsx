@@ -15,8 +15,6 @@ const CalendarMonthNameList: FC<Props> = ({ setIsOpened }) => {
     selectedDate.month === activeMonth;
 
   const handleSelectedMonth = (month: number) => {
-    console.log(selectedDate.year);
-
     handleChangeSelectedDate({
       month,
       year: selectedDate.year,

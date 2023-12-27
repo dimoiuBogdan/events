@@ -15,7 +15,6 @@ type Props = {
   textarea?: boolean;
 };
 const Input: FC<Props> = ({
-  value,
   id,
   label,
   onChange,
@@ -27,6 +26,8 @@ const Input: FC<Props> = ({
   const { getFieldMeta } = useFormikContext();
 
   const fieldError = getFieldMeta(name).error;
+  const initialValue = getFieldMeta(name).initialValue as string;
+  const fieldValue = getFieldMeta(name).value as string;
 
   return (
     <div>
@@ -38,7 +39,7 @@ const Input: FC<Props> = ({
           id={id}
           onChange={(e) => onChange(e.target.value)}
           name={name}
-          value={value}
+          value={fieldValue || initialValue}
           className={cn("w-full rounded-md px-2 py-1 text-zinc-800 shadow-sm", {
             "bg-red-300": fieldError,
           })}
@@ -49,7 +50,7 @@ const Input: FC<Props> = ({
           onChange={(e) => onChange(e.target.value)}
           name={name}
           type={type}
-          value={value}
+          value={fieldValue || initialValue}
           className={cn("w-full rounded-md px-2 py-1 text-zinc-800 shadow-sm", {
             "bg-red-300": fieldError,
           })}
