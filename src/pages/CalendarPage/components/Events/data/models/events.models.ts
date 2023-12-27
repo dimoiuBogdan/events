@@ -16,6 +16,6 @@ export type ShortEventType = Pick<
 >;
 
 export type EventsLengthsType = {
-  from_date: Date;
+  from_date: string;
   events: number;
 };

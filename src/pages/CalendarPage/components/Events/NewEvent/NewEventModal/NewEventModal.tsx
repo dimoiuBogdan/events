@@ -1,11 +1,10 @@
 import { Form, Formik, FormikHelpers } from "formik";
 import { Dispatch, FC, SetStateAction } from "react";
 import { useMutation, useQueryClient } from "react-query";
-import { useDispatch } from "react-redux";
 import Input from "../../../../../../common/components/Form/Input";
 import ModalWrapper from "../../../../../../common/components/ModalWrapper";
 import { NotificationsReducerActions } from "../../../../../../common/components/Notifications.tsx/data/reducers/notifications.reducer.actions";
-import { useAppSelector } from "../../../../../../redux/hooks";
+import { useAppDispatch, useAppSelector } from "../../../../../../redux/hooks";
 import useCalendar from "../../../../data/hooks/useCalendar";
 import { NewEventType } from "../../data/models/events.models";
 import { addEvent } from "../../data/services/events.services";
@@ -17,7 +16,7 @@ type Props = {
   setShowNewEventModal: Dispatch<SetStateAction<boolean>>;
 };
 const NewEventModal: FC<Props> = ({ setShowNewEventModal }) => {
-  const dispatch = useDispatch();
+  const dispatch = useAppDispatch();
   const queryClient = useQueryClient();
   const { formatDate } = useCalendar();
 

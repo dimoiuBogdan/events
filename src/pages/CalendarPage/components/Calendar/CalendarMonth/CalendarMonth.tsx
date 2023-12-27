@@ -18,7 +18,7 @@ const CalendarMonth = () => {
         day: dayjs().date(),
       });
     }
-  }, [selectedDate.month]);
+  }, [handleChangeSelectedDate, isCurrentMonthSelected, selectedDate.month]);
 
   return (
     <div className="my-3 flex items-center justify-evenly text-lg font-medium">

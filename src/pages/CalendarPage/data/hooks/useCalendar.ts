@@ -52,15 +52,18 @@ const useCalendar = (): ReturnType => {
     );
   };
 
-  const handleChangeSelectedDate = (date: Partial<CalendarDateType>) => {
-    dispatch(
-      CalendarPageReducerActions.setSelectedDate({
-        month: date.month,
-        year: date.year,
-        day: date.day,
-      }),
-    );
-  };
+  const handleChangeSelectedDate = useCallback(
+    (date: Partial<CalendarDateType>) => {
+      dispatch(
+        CalendarPageReducerActions.setSelectedDate({
+          month: date.month,
+          year: date.year,
+          day: date.day,
+        }),
+      );
+    },
+    [dispatch],
+  );
 
   const getDaysOfMonth = useCallback(
     (
@@ -99,7 +102,7 @@ const useCalendar = (): ReturnType => {
 
       return days;
     },
-    [],
+    [selectedDate.year],
   );
 
   const getEventsForSelectedDate = async (date: CalendarDateType) => {
