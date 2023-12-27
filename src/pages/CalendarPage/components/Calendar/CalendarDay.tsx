@@ -54,7 +54,7 @@ const CalendarDay: FC<Props> = ({ day }) => {
       onClick={handleSelectDate}
       className={cn(
         "relative flex h-8 w-8 cursor-pointer items-center justify-center rounded-full hover:bg-indigo-300 hover:text-white hover:shadow-md",
-        !!isToday && "bg-purple-400 text-white shadow-md",
+        !!isToday && "bg-red-400 text-white shadow-md",
         !!isSelected && "bg-indigo-400 text-white shadow-md",
         !day.isCurrentMonth && "text-gray-400",
       )}

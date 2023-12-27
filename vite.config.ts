@@ -1,23 +1,7 @@
-import { VitePWA } from "vite-plugin-pwa";
-// vite.config.js
-import { defineConfig } from "vite";
+import { defineConfig } from 'vite'
+import react from '@vitejs/plugin-react-swc'
 
-const version = process.env.APP_VERSION || "1.0.0";
-
+// https://vitejs.dev/config/
 export default defineConfig({
-  plugins: [
-    VitePWA({
-      manifest: {
-        name: "My React Vite App",
-        short_name: "Vite App",
-        description: "My awesome React Vite app.",
-      },
-      workbox: {},
-    }),
-  ],
-  define: {
-    "process.env": {
-      APP_VERSION: JSON.stringify(version),
-    },
-  },
-});
+  plugins: [react()],
+})
