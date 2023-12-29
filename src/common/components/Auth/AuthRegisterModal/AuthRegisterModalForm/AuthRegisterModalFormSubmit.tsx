@@ -1,5 +1,6 @@
 import { FC } from "react";
 import { Link } from "react-router-dom";
+import { AUTH_ROUTES } from "../../../../../routes/routes";
 
 type Props = {
   isSubmitting: boolean;
@@ -15,7 +16,7 @@ const AuthRegisterModalFormSubmit: FC<Props> = ({ isSubmitting }) => {
         Register
       </button>
       <Link
-        to="/login"
+        to={AUTH_ROUTES.LOGIN}
         className="mx-auto mt-2 cursor-pointer text-sm text-zinc-300 hover:text-white"
       >
         Already have an account? Login

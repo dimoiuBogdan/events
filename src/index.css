@@ -5,7 +5,11 @@
 
 body {
   font-family: "Poppins";
-  @apply bg-zinc-800 text-white;
+  @apply bg-zinc-800 text-zinc-100;
+}
+
+* {
+  user-select: none;
 }
 
 .centered-page {

@@ -6,3 +6,5 @@ export const AUTH_ROUTES = {
 export const CALENDAR_ROUTES = {
   BASE: "/calendar",
 };
+
+export const PROFILE_ROUTE = "/profile";

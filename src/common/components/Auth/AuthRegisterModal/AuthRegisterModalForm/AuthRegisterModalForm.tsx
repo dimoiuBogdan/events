@@ -1,5 +1,6 @@
 import { Form, Formik } from "formik";
 import { useNavigate } from "react-router-dom";
+import { AUTH_ROUTES } from "../../../../../routes/routes";
 import Input from "../../../Form/Input";
 import useAuthApi from "../../data/hooks/useAuth.api";
 import { AuthModalRegisterType } from "../../data/models/auth.models";
@@ -20,7 +21,7 @@ const AuthRegisterModalForm = () => {
       onSuccess: () => {
         resetForm();
 
-        navigate("/login", { replace: true });
+        navigate(AUTH_ROUTES.LOGIN, { replace: true });
       },
       onSettled: () => {
         setSubmitting(false);

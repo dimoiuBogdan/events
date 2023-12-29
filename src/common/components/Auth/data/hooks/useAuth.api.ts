@@ -1,6 +1,7 @@
 import { UseMutationResult, useMutation } from "react-query";
 import { useNavigate } from "react-router-dom";
 import { useAppDispatch } from "../../../../../redux/hooks";
+import { AUTH_ROUTES } from "../../../../../routes/routes";
 import {
   getFromLocalStorage,
   removeFromLocalStorage,
@@ -13,6 +14,13 @@ import {
   AuthUserReturnType,
 } from "../models/auth.models";
 import { loginUser, logoutUser, registerUser } from "../services/auth.services";
+
+export const AUTH_QUERY_KEYS = {
+  isAuthenticated: "is-authenticated",
+  logoutUser: "logout-user",
+  loginUser: "login-user",
+  registerUser: "register-user",
+};
 
 type ReturnProps = {
   registerUserRequest: UseMutationResult<
@@ -39,6 +47,7 @@ const useAuthApi = (): ReturnProps => {
   );
 
   const registerUserRequest = useMutation({
+    mutationKey: [AUTH_QUERY_KEYS.registerUser],
     mutationFn: async (user: AuthModalRegisterType) => {
       const res = await registerUser(user);
 
@@ -65,6 +74,7 @@ const useAuthApi = (): ReturnProps => {
   });
 
   const loginUserRequest = useMutation({
+    mutationKey: [AUTH_QUERY_KEYS.loginUser],
     mutationFn: async (user: AuthModalLoginType) => {
       const res = await loginUser(user);
 
@@ -86,6 +96,7 @@ const useAuthApi = (): ReturnProps => {
   });
 
   const logoutUserRequest = useMutation({
+    mutationKey: [AUTH_QUERY_KEYS.logoutUser],
     mutationFn: async () => {
       const refreshToken = getFromLocalStorage("refresh_token");
 
@@ -97,7 +108,7 @@ const useAuthApi = (): ReturnProps => {
       removeFromLocalStorage("access_token");
       removeFromLocalStorage("refresh_token");
 
-      navigate("/login", { replace: true });
+      navigate(AUTH_ROUTES.LOGIN, { replace: true });
     },
     onError: () => {
       dispatch(

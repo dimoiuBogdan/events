@@ -23,3 +23,8 @@ export type AuthTokensType = {
   accessToken: string;
   refreshToken: string;
 };
+
+export type AccessTokenType = {
+  id: number;
+  email: string;
+};

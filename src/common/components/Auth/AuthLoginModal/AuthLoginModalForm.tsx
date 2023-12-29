@@ -1,5 +1,6 @@
 import { Form, Formik } from "formik";
 import { Link, useNavigate } from "react-router-dom";
+import { AUTH_ROUTES } from "../../../../routes/routes";
 import Input from "../../Form/Input";
 import useAuthApi from "../data/hooks/useAuth.api";
 import { AuthModalLoginType } from "../data/models/auth.models";
@@ -67,7 +68,7 @@ const AuthLoginModalForm = () => {
             Login
           </button>
           <Link
-            to="/register"
+            to={AUTH_ROUTES.REGISTER}
             className="mx-auto mt-2 cursor-pointer text-sm text-zinc-300 hover:text-white"
           >
             Don't have an account? Register
