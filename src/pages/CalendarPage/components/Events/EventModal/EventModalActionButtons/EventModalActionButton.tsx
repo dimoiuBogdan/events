@@ -1,6 +1,6 @@
 import { Tooltip } from "primereact/tooltip";
 import { FC } from "react";
-import { cn } from "../../../../../../common/data/utils";
+import { cn } from "../../../../../../common/data/helpers/helpers";
 
 type Props = {
   backgroundColor: string;

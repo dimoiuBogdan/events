@@ -1,8 +1,10 @@
 import dayjs from "dayjs";
 import { FaPhone } from "react-icons/fa";
 import ModalWrapper from "../../../../../common/components/ModalWrapper";
-import { isRomanianPhoneNumber } from "../../../../../common/data/helpers/helpers";
-import { formatEmptyValue } from "../../../../../common/data/utils";
+import {
+  formatEmptyValue,
+  isRomanianPhoneNumber,
+} from "../../../../../common/data/helpers/helpers";
 import { useAppSelector } from "../../../../../redux/hooks";
 import useCalendar from "../../../data/hooks/useCalendar";
 import useEvents from "../data/hooks/useEvents";

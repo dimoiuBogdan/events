@@ -2,26 +2,29 @@ import { ErrorMessage, useFormikContext } from "formik";
 import { InputText } from "primereact/inputtext";
 import { InputTextarea } from "primereact/inputtextarea";
 import { FC, HTMLInputTypeAttribute } from "react";
-import { cn } from "../../data/utils";
+import { cn } from "../../data/helpers/helpers";
 
 type Props = {
+  className?: string;
   id: string;
   label: string;
   name: string;
   onChange: (value: string) => void;
-  type?: HTMLInputTypeAttribute;
-  value?: string;
   required?: boolean;
   textarea?: boolean;
+  type?: HTMLInputTypeAttribute;
+  wrapperClassName?: string;
 };
 const Input: FC<Props> = ({
   id,
   label,
-  onChange,
   name,
+  onChange,
   required = false,
-  type = "text",
   textarea,
+  type = "text",
+  className,
+  wrapperClassName,
 }) => {
   const { getFieldMeta } = useFormikContext();
 
@@ -30,8 +33,8 @@ const Input: FC<Props> = ({
   const fieldValue = getFieldMeta(name).value as string;
 
   return (
-    <div>
-      <label htmlFor={name}>
+    <div className={wrapperClassName}>
+      <label className="text-zinc-200" htmlFor={name}>
         {label} {required && <span className="text-red-400">*</span>}
       </label>
       {textarea ? (
@@ -42,6 +45,7 @@ const Input: FC<Props> = ({
           value={fieldValue || initialValue}
           className={cn("w-full rounded-md px-2 py-1 text-zinc-800 shadow-sm", {
             "bg-red-300": fieldError,
+            className,
           })}
         />
       ) : (
@@ -52,6 +56,7 @@ const Input: FC<Props> = ({
           type={type}
           value={fieldValue || initialValue}
           className={cn("w-full rounded-md px-2 py-1 text-zinc-800 shadow-sm", {
+            [className || ""]: className,
             "bg-red-300": fieldError,
           })}
         />

@@ -6,3 +6,11 @@ export const TWILIO = {
 };
 
 export const MAX_TITLE_WIDTH = 130;
+
+export const ROMANIAN_PHONE_NUMBER_REGEX = /^(\+4|0)(\d{9})$/;
+
+export const MAX_INPUT_LENGTHS = {
+  MEDIUM: 50,
+  LONG: 100,
+  SHORT: 25,
+};

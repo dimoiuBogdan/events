@@ -1,9 +1,9 @@
 import { FC } from "react";
-import { cn } from "../../../../../../common/data/utils";
+import { cn } from "../../../../../../common/data/helpers/helpers";
 import { useAppSelector } from "../../../../../../redux/hooks";
 import { CalendarDayType } from "../../../../data/models/calendar.page.models";
 import { EventsLengthsType } from "../../../Events/data/models/events.models";
-import { getCurrentDayEventsLengths } from "../data/helpers/calendar-day.helpers";
+import { getCurrentDayEventsLengths } from "../data/helpers/calendar-day.helper";
 
 type Props = { day: CalendarDayType };
 const CalendarDayEventsLengths: FC<Props> = ({ day }) => {

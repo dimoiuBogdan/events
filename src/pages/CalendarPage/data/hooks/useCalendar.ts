@@ -101,7 +101,7 @@ const useCalendar = (): ReturnType => {
 
       return days;
     },
-    [selectedDate.year],
+    [],
   );
 
   const getEventsForSelectedDate = async (date: CalendarDateType) => {

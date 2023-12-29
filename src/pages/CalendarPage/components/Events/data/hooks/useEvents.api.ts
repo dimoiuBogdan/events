@@ -30,20 +30,18 @@ type ReturnProps = {
   loadingEvents: boolean;
   selectedEvent: EventType | undefined;
   loadingSelectedEvent: boolean;
-  addEventRequest: UseMutationResult<void, unknown, NewEventType, unknown>;
+  addEventRequest: UseMutationResult<EventType, unknown, NewEventType, unknown>;
   sendMessageRequest: UseMutationResult<void, unknown, void, unknown>;
-  removeEventRequest: UseMutationResult<void, unknown, void, unknown>;
+  removeEventRequest: UseMutationResult<boolean, unknown, void, unknown>;
 };
 const useEventsApi = (): ReturnProps => {
   const dispatch = useAppDispatch();
   const queryClient = useQueryClient();
-  const { formatDate } = useCalendar();
+  const { getEventsForSelectedDate, selectedDate, formatDate } = useCalendar();
 
   const selectedEventId = useAppSelector(
     (state) => state.eventsReducer.selectedEventId,
   );
-
-  const { getEventsForSelectedDate, selectedDate } = useCalendar();
 
   const { data: events, isLoading: loadingEvents } = useQuery({
     queryKey: [EVENTS_QUERY_KEYS.getSelectedDateEvents, selectedDate],
@@ -67,7 +65,9 @@ const useEventsApi = (): ReturnProps => {
 
   const addEventRequest = useMutation({
     mutationFn: async (newEvent: NewEventType) => {
-      await addEvent(newEvent);
+      const res = await addEvent(newEvent);
+
+      return res;
     },
     onSuccess: () => {
       dispatch(
@@ -96,7 +96,7 @@ const useEventsApi = (): ReturnProps => {
     mutationFn: async () => {
       if (!selectedEvent) return;
 
-      await sendMessage(
+      const res = await sendMessage(
         `${selectedEvent.name} - ${formatDate(
           selectedEvent.from_date,
           "DD.MM.YYYY HH:mm",
@@ -104,6 +104,8 @@ const useEventsApi = (): ReturnProps => {
         TWILIO.TO,
         TWILIO.FROM,
       );
+
+      return res;
     },
     onSuccess: () => {
       dispatch(
@@ -127,9 +129,11 @@ const useEventsApi = (): ReturnProps => {
 
   const removeEventRequest = useMutation({
     mutationFn: async () => {
-      if (!selectedEvent) return;
+      if (!selectedEvent) return false;
 
-      await removeEvent(selectedEvent.id);
+      const res = await removeEvent(selectedEvent.id);
+
+      return res;
     },
     onSuccess: () => {
       dispatch(
@@ -140,8 +144,8 @@ const useEventsApi = (): ReturnProps => {
         }),
       );
 
-      queryClient.invalidateQueries("get-all-events");
-      queryClient.invalidateQueries("get-selected-date-events");
+      queryClient.invalidateQueries(EVENTS_QUERY_KEYS.getAllEvents);
+      queryClient.invalidateQueries(EVENTS_QUERY_KEYS.getSelectedDateEvents);
     },
     onError: () => {
       dispatch(
@@ -156,6 +160,7 @@ const useEventsApi = (): ReturnProps => {
 
   useQuery({
     queryKey: [EVENTS_QUERY_KEYS.getAllEvents],
+    staleTime: Infinity,
     queryFn: async () => {
       const res = await getEvents();
 

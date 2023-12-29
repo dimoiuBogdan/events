@@ -1,5 +1,5 @@
 import { Dispatch, FC, SetStateAction } from "react";
-import { cn } from "../../../../../common/data/utils";
+import { cn } from "../../../../../common/data/helpers/helpers";
 import { getMonthNames } from "../../../data/helpers/calendar.page.helper";
 import useCalendar from "../../../data/hooks/useCalendar";
 

@@ -7,7 +7,7 @@ import {
   FaInfoCircle,
 } from "react-icons/fa";
 import { useAppDispatch } from "../../../redux/hooks";
-import { cn } from "../../data/utils";
+import { cn } from "../../data/helpers/helpers";
 import { NotificationType } from "./data/models/notifications.models";
 import { NotificationsReducerActions } from "./data/reducers/notifications.reducer.actions";
 

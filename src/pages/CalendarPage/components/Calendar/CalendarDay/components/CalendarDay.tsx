@@ -1,12 +1,12 @@
 import { FC } from "react";
-import { cn } from "../../../../../../common/data/utils";
+import { cn } from "../../../../../../common/data/helpers/helpers";
 import useCalendar from "../../../../data/hooks/useCalendar";
 import { CalendarDayType } from "../../../../data/models/calendar.page.models";
 import {
   getIsSelected,
   getIsToday,
   mapDayToSelectedDate,
-} from "../data/helpers/calendar-day.helpers";
+} from "../data/helpers/calendar-day.helper";
 import CalendarDayEventsLengths from "./CalendarDayEventsLengths";
 
 type Props = {
