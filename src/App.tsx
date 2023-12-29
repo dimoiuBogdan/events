@@ -6,7 +6,15 @@ import { handleAxiosInterceptor } from "./common/data/helpers/axios.helper";
 import AppRoutes from "./routes/AppRoutes";
 
 const App = () => {
-  const queryClient = new QueryClient();
+  const queryClient = new QueryClient({
+    defaultOptions: {
+      queries: {
+        refetchOnWindowFocus: false,
+        cacheTime: 10000,
+        staleTime: 10000,
+      },
+    },
+  });
 
   handleAxiosInterceptor();
 
