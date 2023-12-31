@@ -10,6 +10,10 @@ const actions = {
     "setEventsLengths",
     (payload: EventsLengthsType[]) => payload,
   )(),
+  setEditEventMode: createAction(
+    "setEditEventMode",
+    (payload: boolean) => payload,
+  )(),
 };
 
 export type EventsReducerAction = ActionType<typeof actions>;

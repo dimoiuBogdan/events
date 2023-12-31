@@ -26,6 +26,11 @@ export const eventsReducer: Reducer<
         ...state,
         eventsLengths: action.payload,
       };
+    case getType(EventsReducerActions.setEditEventMode):
+      return {
+        ...state,
+        editEventMode: action.payload,
+      };
     default:
       return state;
   }

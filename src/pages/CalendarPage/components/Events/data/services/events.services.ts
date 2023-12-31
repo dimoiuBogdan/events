@@ -1,6 +1,10 @@
 import axios from "axios";
 import { BASE_API_URL } from "../../../../../../common/data/constants";
-import { EventType, NewEventType } from "../models/events.models";
+import {
+  EventEditType,
+  EventType,
+  NewEventType,
+} from "../models/events.models";
 
 export const getEventsForCertainDay = async (
   date: Date,
@@ -34,6 +38,15 @@ export const addEvent = async (event: NewEventType): Promise<EventType> => {
 
 export const removeEvent = async (id: string): Promise<boolean> => {
   const res = await axios.delete(`${BASE_API_URL}/events/${id}`);
+
+  return res.data;
+};
+
+export const updateEvent = async (
+  id: string,
+  event: EventEditType,
+): Promise<boolean> => {
+  const res = await axios.put(`${BASE_API_URL}/events/${id}`, event);
 
   return res.data;
 };

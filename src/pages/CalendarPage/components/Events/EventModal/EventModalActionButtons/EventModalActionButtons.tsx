@@ -1,7 +1,9 @@
 import { FC } from "react";
 import { isRomanianPhoneNumber } from "../../../../../../common/data/helpers/helpers";
+import { useAppDispatch } from "../../../../../../redux/hooks";
 import useEventsApi from "../../data/hooks/useEvents.api";
 import { EventType } from "../../data/models/events.models";
+import { EventsReducerActions } from "../../data/reducers/events.reducer.actions";
 import EventModalActionButton from "./EventModalActionButton";
 
 type Props = {
@@ -12,6 +14,7 @@ const EventModalActionButtons: FC<Props> = ({
   handleCloseModal,
   selectedEvent,
 }) => {
+  const dispatch = useAppDispatch();
   const { removeEventRequest, sendMessageRequest } = useEventsApi();
 
   const canNotify =
@@ -22,13 +25,15 @@ const EventModalActionButtons: FC<Props> = ({
       <EventModalActionButton
         backgroundColor="bg-red-500"
         onClick={() =>
-          removeEventRequest.mutate(undefined, { onSuccess: handleCloseModal })
+          removeEventRequest.mutate(undefined, {
+            onSuccess: handleCloseModal,
+          })
         }
         content="Remove"
       />
       <EventModalActionButton
         backgroundColor="bg-orange-400"
-        onClick={() => {}}
+        onClick={() => dispatch(EventsReducerActions.setEditEventMode(true))}
         content="Edit"
       />
       <EventModalActionButton

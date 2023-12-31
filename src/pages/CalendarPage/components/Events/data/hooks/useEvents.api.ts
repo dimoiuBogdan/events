@@ -9,13 +9,18 @@ import { TWILIO } from "../../../../../../common/data/constants";
 import { useAppDispatch, useAppSelector } from "../../../../../../redux/hooks";
 import useCalendar from "../../../../data/hooks/useCalendar";
 import { mapEvents } from "../helpers/events.helper";
-import { EventType, NewEventType } from "../models/events.models";
+import {
+  EventEditType,
+  EventType,
+  NewEventType,
+} from "../models/events.models";
 import { EventsReducerActions } from "../reducers/events.reducer.actions";
 import {
   addEvent,
   getEventById,
   getEvents,
   removeEvent,
+  updateEvent,
 } from "../services/events.services";
 import { sendMessage } from "../services/messages.services";
 
@@ -33,6 +38,12 @@ type ReturnProps = {
   addEventRequest: UseMutationResult<EventType, unknown, NewEventType, unknown>;
   sendMessageRequest: UseMutationResult<void, unknown, void, unknown>;
   removeEventRequest: UseMutationResult<boolean, unknown, void, unknown>;
+  updateEventRequest: UseMutationResult<
+    boolean,
+    unknown,
+    EventEditType,
+    unknown
+  >;
 };
 const useEventsApi = (): ReturnProps => {
   const dispatch = useAppDispatch();
@@ -158,6 +169,37 @@ const useEventsApi = (): ReturnProps => {
     },
   });
 
+  const updateEventRequest = useMutation({
+    mutationFn: async (updatedEvent: EventEditType) => {
+      if (!selectedEvent) return false;
+
+      const res = await updateEvent(selectedEvent.id, updatedEvent);
+
+      return res;
+    },
+    onSuccess: () => {
+      dispatch(
+        NotificationsReducerActions.addNotification({
+          type: "success",
+          title: "Event updated!",
+          message: "The event has been updated!",
+        }),
+      );
+
+      queryClient.invalidateQueries(EVENTS_QUERY_KEYS.getSelectedDateEvents);
+      queryClient.invalidateQueries(EVENTS_QUERY_KEYS.getSpecificEvent);
+    },
+    onError: () => {
+      dispatch(
+        NotificationsReducerActions.addNotification({
+          type: "error",
+          title: "Failed to update event!",
+          message: "The event could not be updated!",
+        }),
+      );
+    },
+  });
+
   useQuery({
     queryKey: [EVENTS_QUERY_KEYS.getAllEvents],
     staleTime: Infinity,
@@ -181,6 +223,7 @@ const useEventsApi = (): ReturnProps => {
     addEventRequest,
     sendMessageRequest,
     removeEventRequest,
+    updateEventRequest,
   };
 };
 

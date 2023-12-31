@@ -19,3 +19,5 @@ export type EventsLengthsType = {
   from_date: string;
   events: number;
 };
+
+export type EventEditType = Omit<EventType, "id">;
