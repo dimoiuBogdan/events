@@ -18,6 +18,14 @@ export const eventModalEditFormValidationSchema = yup.object().shape({
       MAX_INPUT_LENGTHS.LONG,
       `Description must be less than ${MAX_INPUT_LENGTHS.LONG} characters`,
     ),
+  name: yup
+    .string()
+    .required("Name is required")
+    .typeError("Name must be text")
+    .max(
+      MAX_INPUT_LENGTHS.MEDIUM,
+      `Name must be less than ${MAX_INPUT_LENGTHS.MEDIUM} characters`,
+    ),
   contact: yup
     .string()
     .typeError("Contact must be text")
