@@ -7,3 +7,15 @@ export const getUserById = async (id: number): Promise<UserType> => {
 
   return res.data;
 };
+
+export const getUserProfileImage = async (userId: number): Promise<Blob> => {
+  const res = await axios.get(`${BASE_API_URL}/get-profile-image/${userId}`, {
+    responseType: "blob",
+  });
+
+  if (res.status !== 200) {
+    throw new Error("File not found");
+  }
+
+  return res.data;
+};

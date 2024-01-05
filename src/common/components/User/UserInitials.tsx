@@ -7,6 +7,7 @@ type Props = {
 };
 const UserInitials: FC<Props> = ({ onClick }) => {
   const { userData } = useUserApi();
+  const { userProfileImage } = useUserApi();
 
   const getUserInitials = () => {
     if (!userData) return;
@@ -14,10 +15,19 @@ const UserInitials: FC<Props> = ({ onClick }) => {
     return getInitials(userData.first_name, userData.last_name);
   };
 
+  if (userProfileImage)
+    return (
+      <img
+        src={userProfileImage}
+        alt="profile image"
+        className="h-8 w-8 rounded-full object-cover"
+      />
+    );
+
   return (
     <div
       onClick={onClick}
-      className="cursor-pointer rounded-full bg-indigo-500 px-2 py-1.5 shadow-md hover:shadow-indigo-600"
+      className="flex h-8 w-8 cursor-pointer items-center justify-center rounded-full bg-indigo-500 shadow-md hover:shadow-indigo-600"
     >
       {getUserInitials()}
     </div>

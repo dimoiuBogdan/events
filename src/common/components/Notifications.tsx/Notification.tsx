@@ -81,7 +81,7 @@ const Notification: FC<Props> = ({ id, index, message, title, type }) => {
     <div
       onClick={handleClick}
       className={cn(
-        "fixed right-4 z-40 w-72 cursor-pointer rounded-md bg-opacity-90 px-3 py-2 shadow-md hover:scale-105",
+        "min-w-72 fixed right-4 z-40 cursor-pointer rounded-md bg-opacity-90 px-3 py-2 shadow-md hover:scale-105",
         getNotificationProperties().background,
         getNotificationProperties().text,
       )}

@@ -1,5 +1,6 @@
 import { Form, Formik } from "formik";
 import useUserApi from "../../../../common/components/User/data/hooks/useUser.api";
+import ProfileDataImage from "./ProfileDataImage/ProfileDataImage";
 import ProfileDataProperty from "./ProfileDataProperty";
 import { getProfileDataInitialValues } from "./data/helpers/profile-data.helper";
 import { profileDataValidationSchema } from "./data/helpers/profile-data.validation-schema";
@@ -17,6 +18,7 @@ const ProfileData = () => {
       validationSchema={profileDataValidationSchema}
     >
       <Form className="flex flex-col gap-y-4">
+        <ProfileDataImage />
         <ProfileDataProperty
           name="email"
           data={userData?.email}
