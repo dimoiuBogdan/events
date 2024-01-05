@@ -87,8 +87,6 @@ const useAuthApi = (): ReturnProps => {
       saveToLocalStorage("refresh_token", data.refreshToken);
     },
     onError: (err: AxiosError) => {
-      console.log(err.response?.status);
-
       dispatch(
         NotificationsReducerActions.addNotification({
           type: "error",
