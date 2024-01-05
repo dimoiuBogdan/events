@@ -38,6 +38,7 @@ const useUserApi = (): ReturnProps => {
   const { data: userProfileImage, isLoading: loadingProfileImage } = useQuery({
     queryKey: [USER_QUERY_KEYS.getUserProfileImage, userId],
     staleTime: Infinity,
+    retry: false,
     queryFn: async () => {
       if (!userId) return;
 
@@ -50,9 +51,6 @@ const useUserApi = (): ReturnProps => {
       return image;
     },
     enabled: !!userId,
-    onError: () => {
-      logoutUserRequest.mutate();
-    },
   });
 
   return {
