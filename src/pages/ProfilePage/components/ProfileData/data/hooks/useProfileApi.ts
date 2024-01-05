@@ -1,3 +1,4 @@
+import { AxiosError } from "axios";
 import { UseMutationResult, useMutation, useQueryClient } from "react-query";
 import { NotificationsReducerActions } from "../../../../../../common/components/Notifications.tsx/data/reducers/notifications.reducer.actions";
 import useUserApi, {
