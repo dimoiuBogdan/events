@@ -1,3 +1,4 @@
+import { AxiosError } from "axios";
 import {
   UseMutationResult,
   useMutation,
@@ -92,12 +93,13 @@ const useEventsApi = (): ReturnProps => {
       queryClient.invalidateQueries(EVENTS_QUERY_KEYS.getAllEvents);
       queryClient.invalidateQueries(EVENTS_QUERY_KEYS.getSelectedDateEvents);
     },
-    onError: () => {
+    onError: (err: AxiosError) => {
       dispatch(
         NotificationsReducerActions.addNotification({
           type: "error",
           title: "Failed to add event!",
           message: "The event could not be added!",
+          status: err.response?.status,
         }),
       );
     },
@@ -127,12 +129,13 @@ const useEventsApi = (): ReturnProps => {
         }),
       );
     },
-    onError: () => {
+    onError: (err: AxiosError) => {
       dispatch(
         NotificationsReducerActions.addNotification({
           type: "error",
           title: "Failed to send message!",
           message: "The message was not sent!",
+          status: err.response?.status,
         }),
       );
     },
@@ -158,12 +161,13 @@ const useEventsApi = (): ReturnProps => {
       queryClient.invalidateQueries(EVENTS_QUERY_KEYS.getAllEvents);
       queryClient.invalidateQueries(EVENTS_QUERY_KEYS.getSelectedDateEvents);
     },
-    onError: () => {
+    onError: (err: AxiosError) => {
       dispatch(
         NotificationsReducerActions.addNotification({
           type: "error",
           title: "Failed to remove event!",
           message: "The event could not be removed!",
+          status: err.response?.status,
         }),
       );
     },
@@ -189,12 +193,13 @@ const useEventsApi = (): ReturnProps => {
       queryClient.invalidateQueries(EVENTS_QUERY_KEYS.getSelectedDateEvents);
       queryClient.invalidateQueries(EVENTS_QUERY_KEYS.getSpecificEvent);
     },
-    onError: () => {
+    onError: (err: AxiosError) => {
       dispatch(
         NotificationsReducerActions.addNotification({
           type: "error",
           title: "Failed to update event!",
           message: "The event could not be updated!",
+          status: err.response?.status,
         }),
       );
     },

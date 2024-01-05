@@ -1,3 +1,4 @@
+import { AxiosError } from "axios";
 import { UseMutationResult, useMutation } from "react-query";
 import { useNavigate } from "react-router-dom";
 import { useAppDispatch } from "../../../../../redux/hooks";
@@ -62,12 +63,13 @@ const useAuthApi = (): ReturnProps => {
         }),
       );
     },
-    onError: () => {
+    onError: (err: AxiosError) => {
       dispatch(
         NotificationsReducerActions.addNotification({
           type: "error",
           title: "Creating account failed!",
           message: "The account could not be created.",
+          status: err.response?.status,
         }),
       );
     },
@@ -84,12 +86,15 @@ const useAuthApi = (): ReturnProps => {
       saveToLocalStorage("access_token", data.accessToken);
       saveToLocalStorage("refresh_token", data.refreshToken);
     },
-    onError: () => {
+    onError: (err: AxiosError) => {
+      console.log(err.response?.status);
+
       dispatch(
         NotificationsReducerActions.addNotification({
           type: "error",
           title: "Logging in failed!",
           message: "Check your credentials and try again.",
+          status: err.response?.status,
         }),
       );
     },
@@ -110,12 +115,13 @@ const useAuthApi = (): ReturnProps => {
 
       navigate(AUTH_ROUTES.LOGIN, { replace: true });
     },
-    onError: () => {
+    onError: (err: AxiosError) => {
       dispatch(
         NotificationsReducerActions.addNotification({
           type: "error",
           title: "Logout failed!",
           message: "Could not log out.",
+          status: err.response?.status,
         }),
       );
     },

@@ -19,6 +19,7 @@ const Notifications = () => {
             message={message}
             title={title}
             type={type}
+            status={notification.status}
           />
         );
       })}

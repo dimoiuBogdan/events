@@ -1,3 +1,4 @@
+import { HttpStatusCode } from "axios";
 import { FC, useCallback, useEffect } from "react";
 import {
   FaBiohazard,
@@ -14,13 +15,24 @@ import { NotificationsReducerActions } from "./data/reducers/notifications.reduc
 type Props = {
   index: number;
 } & NotificationType;
-const Notification: FC<Props> = ({ id, index, message, title, type }) => {
+const Notification: FC<Props> = ({
+  id,
+  index,
+  message,
+  title,
+  type,
+  status,
+}) => {
   const dispatch = useAppDispatch();
 
   const TIMEOUT_MS = 5000;
   const NOTIFICATION_HEIGHT = 64;
   const MARGIN = 30;
   const TOP = index * (NOTIFICATION_HEIGHT + MARGIN) + MARGIN;
+
+  const rateLimitStatus = status === HttpStatusCode.TooManyRequests;
+  title = rateLimitStatus ? "Too many requests" : title;
+  message = rateLimitStatus ? "Try again later" : message;
 
   const getNotificationProperties = () => {
     switch (type) {
@@ -69,19 +81,14 @@ const Notification: FC<Props> = ({ id, index, message, title, type }) => {
     }, TIMEOUT_MS);
   }, [handleClose]);
 
-  const handleClick = () => {
-    console.log("clicked");
-  };
-
   useEffect(() => {
     handleRemoveNotification();
   }, [handleRemoveNotification]);
 
   return (
     <div
-      onClick={handleClick}
       className={cn(
-        "min-w-72 fixed right-4 z-40 cursor-pointer rounded-md bg-opacity-90 px-3 py-2 shadow-md hover:scale-105",
+        "fixed right-4 z-40 min-w-[300px] cursor-pointer rounded-md bg-opacity-90 px-3 py-2 shadow-md hover:scale-105",
         getNotificationProperties().background,
         getNotificationProperties().text,
       )}

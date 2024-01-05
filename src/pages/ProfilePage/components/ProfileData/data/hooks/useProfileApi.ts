@@ -49,12 +49,13 @@ const useProfileApi = (): ReturnProps => {
 
       queryClient.invalidateQueries([USER_QUERY_KEYS.getUserData]);
     },
-    onError: () => {
+    onError: (err: AxiosError) => {
       dispatch(
         NotificationsReducerActions.addNotification({
           type: "error",
           title: "Updating field failed!",
           message: "The field could not be updated.",
+          status: err.response?.status,
         }),
       );
     },
@@ -81,12 +82,13 @@ const useProfileApi = (): ReturnProps => {
       queryClient.invalidateQueries([USER_QUERY_KEYS.getUserData]);
       queryClient.invalidateQueries([USER_QUERY_KEYS.getUserProfileImage]);
     },
-    onError: () => {
+    onError: (err: AxiosError) => {
       dispatch(
         NotificationsReducerActions.addNotification({
           type: "error",
           title: "Profile image update failed!",
           message: "Your profile image could not be updated.",
+          status: err.response?.status,
         }),
       );
     },
