@@ -12,6 +12,7 @@ const App = () => {
         refetchOnWindowFocus: false,
         cacheTime: 10000,
         staleTime: 10000,
+        retry: false,
       },
     },
   });
