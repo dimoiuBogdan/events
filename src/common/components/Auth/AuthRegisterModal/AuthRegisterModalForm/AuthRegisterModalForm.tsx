@@ -2,6 +2,7 @@ import { Form, Formik } from "formik";
 import { useNavigate } from "react-router-dom";
 import { AUTH_ROUTES } from "../../../../../routes/routes";
 import Input from "../../../Form/Input";
+import PasswordInput from "../../../Form/PasswordInput";
 import useAuthApi from "../../data/hooks/useAuth.api";
 import { AuthModalRegisterType } from "../../data/models/auth.models";
 import { registerValidationSchema } from "../data/auth-register-modal.validation-schema";
@@ -87,28 +88,17 @@ const AuthRegisterModalForm = () => {
           />
 
           <div className="flex items-center gap-x-6">
-            <Input
-              id="password"
+            <PasswordInput
               label="Password"
               name="password"
-              onChange={(value) => {
-                setFieldValue("password", value);
-              }}
-              required
+              setFieldValue={setFieldValue}
               wrapperClassName="flex-1"
-              type="password"
             />
-
-            <Input
-              id="confirm_password"
-              label="Confirm Password"
+            <PasswordInput
+              label="ConfirmPassword"
               name="confirm_password"
-              onChange={(value) => {
-                setFieldValue("confirm_password", value);
-              }}
-              required
+              setFieldValue={setFieldValue}
               wrapperClassName="flex-1"
-              type="password"
             />
           </div>
           <AuthRegisterModalFormSubmit isSubmitting={isSubmitting} />

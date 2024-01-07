@@ -2,6 +2,7 @@ import { Form, Formik } from "formik";
 import { Link, useNavigate } from "react-router-dom";
 import { AUTH_ROUTES } from "../../../../routes/routes";
 import Input from "../../Form/Input";
+import PasswordInput from "../../Form/PasswordInput";
 import useAuthApi from "../data/hooks/useAuth.api";
 import { AuthModalLoginType } from "../data/models/auth.models";
 import { loginValidationSchema } from "./data/auth-login-modal.validation-schema";
@@ -49,16 +50,18 @@ const AuthLoginModalForm = () => {
             }}
             required
           />
-          <Input
-            id="password"
+          <PasswordInput
             label="Password"
             name="password"
-            type="password"
-            onChange={(value) => {
-              setFieldValue("password", value);
-            }}
-            required
+            setFieldValue={setFieldValue}
           />
+
+          <Link
+            to={AUTH_ROUTES.FORGOT_PASSWORD}
+            className="-mt-3 cursor-pointer text-sm text-zinc-300"
+          >
+            Forgot password?
+          </Link>
 
           <button
             type="submit"

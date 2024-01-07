@@ -1,6 +1,7 @@
 import { AxiosError } from "axios";
 import { UseMutationResult, useMutation } from "react-query";
 import { useNavigate } from "react-router-dom";
+import { ForgotPasswordNewModalParamsType } from "../../../../../pages/ForgotPasswordPage/components/ForgotPasswordModal/data/models/forgot-password-modal.models";
 import { useAppDispatch } from "../../../../../redux/hooks";
 import { AUTH_ROUTES } from "../../../../../routes/routes";
 import {
@@ -14,13 +15,23 @@ import {
   AuthModalRegisterType,
   AuthUserReturnType,
 } from "../models/auth.models";
-import { loginUser, logoutUser, registerUser } from "../services/auth.services";
+import {
+  forgotPassword,
+  loginUser,
+  logoutUser,
+  registerUser,
+  setNewPassword,
+  verifyResetToken,
+} from "../services/auth.services";
 
 export const AUTH_QUERY_KEYS = {
   isAuthenticated: "is-authenticated",
   logoutUser: "logout-user",
   loginUser: "login-user",
   registerUser: "register-user",
+  forgotPassword: "forgot-password",
+  verifyResetToken: "verify-reset-token",
+  setNewPassword: "set-new-password",
 };
 
 type ReturnProps = {
@@ -38,6 +49,24 @@ type ReturnProps = {
   >;
   logoutUserRequest: UseMutationResult<void, unknown, void, unknown>;
   isAuthenticated: boolean;
+  forgotPasswordRequest: UseMutationResult<
+    void,
+    AxiosError<unknown, string>,
+    string,
+    unknown
+  >;
+  verifyResetTokenRequest: UseMutationResult<
+    boolean,
+    AxiosError<unknown, string>,
+    string,
+    unknown
+  >;
+  setNewPasswordRequest: UseMutationResult<
+    boolean,
+    AxiosError<unknown, string>,
+    ForgotPasswordNewModalParamsType,
+    unknown
+  >;
 };
 const useAuthApi = (): ReturnProps => {
   const dispatch = useAppDispatch();
@@ -123,11 +152,97 @@ const useAuthApi = (): ReturnProps => {
     },
   });
 
+  const forgotPasswordRequest = useMutation({
+    mutationKey: [AUTH_QUERY_KEYS.forgotPassword],
+    mutationFn: async (email: string) => {
+      const res = await forgotPassword(email);
+
+      return res;
+    },
+    onSuccess: () => {
+      dispatch(
+        NotificationsReducerActions.addNotification({
+          type: "success",
+          title: "Successfully sent!",
+          message: "Check your email to reset your password.",
+        }),
+      );
+    },
+    onError: (err: AxiosError) => {
+      dispatch(
+        NotificationsReducerActions.addNotification({
+          type: "error",
+          title: "Could not send email!",
+          message: "Sending forgot password email failed.",
+          status: err.response?.status,
+        }),
+      );
+    },
+  });
+
+  const verifyResetTokenRequest = useMutation({
+    mutationKey: [AUTH_QUERY_KEYS.verifyResetToken],
+    mutationFn: async (resetToken: string) => {
+      const res = await verifyResetToken(resetToken);
+
+      return res;
+    },
+    onError: (err: AxiosError) => {
+      dispatch(
+        NotificationsReducerActions.addNotification({
+          type: "error",
+          title: "Reset URL is invalid!",
+          message: "Please try resetting your pasword again.",
+          status: err.response?.status,
+        }),
+      );
+
+      navigate(AUTH_ROUTES.LOGIN, { replace: true });
+    },
+  });
+
+  const setNewPasswordRequest = useMutation({
+    mutationKey: [AUTH_QUERY_KEYS.verifyResetToken],
+    mutationFn: async ({
+      resetToken,
+      password,
+    }: ForgotPasswordNewModalParamsType) => {
+      const res = await setNewPassword(resetToken, password);
+
+      return res;
+    },
+    onSuccess: () => {
+      dispatch(
+        NotificationsReducerActions.addNotification({
+          type: "success",
+          title: "Successfully set!",
+          message: "You can now log in with your new password.",
+        }),
+      );
+    },
+    onError: (err: AxiosError) => {
+      dispatch(
+        NotificationsReducerActions.addNotification({
+          type: "error",
+          title: "Setting new password failed!",
+          message: "Please try again from scratch.",
+          status: err.response?.status,
+        }),
+      );
+    },
+    onSettled: () => {
+      navigate(AUTH_ROUTES.LOGIN, { replace: true });
+    },
+  });
+
   return {
     registerUserRequest,
     loginUserRequest,
     logoutUserRequest,
     isAuthenticated,
+    forgotPasswordRequest,
+    verifyResetTokenRequest,
+    setNewPasswordRequest,
   };
 };
 

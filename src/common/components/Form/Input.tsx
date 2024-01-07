@@ -13,6 +13,7 @@ type Props = {
   required?: boolean;
   textarea?: boolean;
   type?: HTMLInputTypeAttribute;
+  icon?: JSX.Element;
   wrapperClassName?: string;
 };
 const Input: FC<Props> = ({
@@ -24,6 +25,7 @@ const Input: FC<Props> = ({
   textarea,
   type = "text",
   className,
+  icon,
   wrapperClassName,
 }) => {
   const { getFieldMeta } = useFormikContext();
@@ -39,30 +41,42 @@ const Input: FC<Props> = ({
           {label} {required && <span className="text-red-400">*</span>}
         </label>
       )}
-      {textarea ? (
-        <InputTextarea
-          id={id}
-          onChange={(e) => onChange(e.target.value)}
-          name={name}
-          value={fieldValue ?? initialValue}
-          className={cn("w-full rounded-md px-2 py-1 text-zinc-800 shadow-sm", {
-            "bg-red-300": fieldError,
-            className,
-          })}
-        />
-      ) : (
-        <InputText
-          id={id}
-          onChange={(e) => onChange(e.target.value)}
-          name={name}
-          type={type}
-          value={fieldValue ?? initialValue}
-          className={cn("w-full rounded-md px-2 py-1 text-zinc-800 shadow-sm", {
-            [className || ""]: className,
-            "bg-red-300": fieldError,
-          })}
-        />
-      )}
+      <span className="relative">
+        {textarea ? (
+          <InputTextarea
+            id={id}
+            onChange={(e) => onChange(e.target.value)}
+            name={name}
+            value={fieldValue ?? initialValue}
+            className={cn(
+              "w-full rounded-md px-2 py-1 text-zinc-800 shadow-sm",
+              {
+                "bg-red-300": fieldError,
+                className,
+              },
+            )}
+          />
+        ) : (
+          <InputText
+            id={id}
+            onChange={(e) => onChange(e.target.value)}
+            name={name}
+            type={type}
+            value={fieldValue ?? initialValue}
+            className={cn(
+              "w-full rounded-md px-2 py-1 text-zinc-800 shadow-sm",
+              {
+                [className || ""]: className,
+                "bg-red-300": fieldError,
+                "pr-7": icon,
+              },
+            )}
+          />
+        )}
+        <div className="absolute right-2 top-1/2 -translate-y-1/2 text-zinc-700">
+          {icon}
+        </div>
+      </span>
       <ErrorMessage
         name={name}
         component="div"
