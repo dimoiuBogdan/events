@@ -101,9 +101,7 @@ const useAuthApi = (): ReturnProps => {
   const logoutUserRequest = useMutation({
     mutationKey: [AUTH_QUERY_KEYS.logoutUser],
     mutationFn: async () => {
-      const refreshToken = getFromLocalStorage("refresh_token");
-
-      const res = await logoutUser(refreshToken);
+      const res = await logoutUser();
 
       return res;
     },

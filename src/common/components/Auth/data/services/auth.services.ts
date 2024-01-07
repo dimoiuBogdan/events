@@ -43,8 +43,6 @@ export const registerUser = async (
   return res.data;
 };
 
-export const logoutUser = async (refreshToken: string | null) => {
-  await axios.post(`${BASE_API_URL}/users/logout`, {
-    refreshToken,
-  });
+export const logoutUser = async () => {
+  await axios.post(`${BASE_API_URL}/users/logout`);
 };
