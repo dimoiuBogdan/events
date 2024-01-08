@@ -13,11 +13,12 @@ export const newEventValidationSchema = yup.object().shape({
   from_date: yup
     .date()
     .required("From date is required")
-    .typeError("From must be a date"),
+    .typeError("From must be a date")
+    .max(yup.ref("to_date"), "From date must be before to date"),
   to_date: yup
     .date()
-    .required("To date is required")
-    .typeError("To must be a date"),
+    .typeError("To must be a date")
+    .min(yup.ref("from_date"), "To date must be after from date"),
   description: yup
     .string()
     .typeError("Description must be text")

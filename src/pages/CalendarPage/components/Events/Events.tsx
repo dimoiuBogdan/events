@@ -6,14 +6,14 @@ import useEventsApi from "./data/hooks/useEvents.api";
 const Events = () => {
   const { loadingEvents, events } = useEventsApi();
 
-  if (loadingEvents) {
-    return <div>Loading...</div>;
-  }
-
   return (
     <div className="flex flex-col gap-y-4">
-      {events?.map((event) => <Event key={event.id} {...event} />)}
       <NewEvent />
+      {loadingEvents ? (
+        <div>Loading...</div>
+      ) : (
+        events?.map((event) => <Event key={event.id} {...event} />)
+      )}
       <EventModal />
     </div>
   );

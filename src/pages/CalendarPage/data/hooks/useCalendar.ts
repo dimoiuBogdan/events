@@ -1,8 +1,6 @@
 import dayjs from "dayjs";
 import { useCallback } from "react";
 import { useAppDispatch, useAppSelector } from "../../../../redux/hooks";
-import { EventType } from "../../components/Events/data/models/events.models";
-import { getEventsForCertainDay } from "../../components/Events/data/services/events.services";
 import {
   CalendarDateType,
   CalendarDayType,
@@ -16,7 +14,6 @@ type ReturnType = {
   getDaysOfMonth: (month: number, year: number) => CalendarDayType[][];
   handleChangeSelectedDate: (date: Partial<CalendarDateType>) => void;
   formatDate: (date: Date | string, format: string) => string;
-  getEventsForSelectedDate: (date: CalendarDateType) => Promise<EventType[]>;
 };
 const useCalendar = (): ReturnType => {
   const dispatch = useAppDispatch();
@@ -104,16 +101,6 @@ const useCalendar = (): ReturnType => {
     [],
   );
 
-  const getEventsForSelectedDate = async (date: CalendarDateType) => {
-    if (!date.day) return [];
-
-    const mappedDate = new Date(date.year, date.month, date.day);
-
-    const events = await getEventsForCertainDay(mappedDate);
-
-    return events;
-  };
-
   const formatDate = (date: Date | string, format: string) =>
     dayjs(date).format(format);
 
@@ -124,7 +111,6 @@ const useCalendar = (): ReturnType => {
     isCurrentMonthSelected,
     selectedDate,
     formatDate,
-    getEventsForSelectedDate,
   };
 };
 

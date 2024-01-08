@@ -6,6 +6,8 @@ import { cn } from "../../data/helpers/helpers";
 
 type Props = {
   className?: string;
+  disabled?: boolean;
+  icon?: JSX.Element;
   id: string;
   label?: string;
   name: string;
@@ -13,10 +15,12 @@ type Props = {
   required?: boolean;
   textarea?: boolean;
   type?: HTMLInputTypeAttribute;
-  icon?: JSX.Element;
   wrapperClassName?: string;
 };
 const Input: FC<Props> = ({
+  className,
+  disabled,
+  icon,
   id,
   label,
   name,
@@ -24,8 +28,6 @@ const Input: FC<Props> = ({
   required = false,
   textarea,
   type = "text",
-  className,
-  icon,
   wrapperClassName,
 }) => {
   const { getFieldMeta } = useFormikContext();
@@ -45,6 +47,7 @@ const Input: FC<Props> = ({
         {textarea ? (
           <InputTextarea
             id={id}
+            disabled={disabled}
             onChange={(e) => onChange(e.target.value)}
             name={name}
             value={fieldValue ?? initialValue}
@@ -59,6 +62,7 @@ const Input: FC<Props> = ({
         ) : (
           <InputText
             id={id}
+            disabled={disabled}
             onChange={(e) => onChange(e.target.value)}
             name={name}
             type={type}

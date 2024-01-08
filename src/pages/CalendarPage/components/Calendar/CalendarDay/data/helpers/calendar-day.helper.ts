@@ -40,12 +40,16 @@ export const getCurrentDayEventsLengths = (
 
   const mappedDayToSelectedDate = mapDayToSelectedDate(day);
 
-  return eventsLengths.find(
+  return eventsLengths.filter(
     (event) =>
-      dayjs(event.from_date).date() === mappedDayToSelectedDate.day &&
-      dayjs(event.from_date).month() === mappedDayToSelectedDate.month &&
-      dayjs(event.from_date).year() === mappedDayToSelectedDate.year,
-  )?.events;
+      mappedDayToSelectedDate.day &&
+      dayjs(event.from_date).date() <= mappedDayToSelectedDate.day &&
+      dayjs(event.to_date).date() >= mappedDayToSelectedDate.day &&
+      dayjs(event.from_date).month() <= mappedDayToSelectedDate.month &&
+      dayjs(event.to_date).month() >= mappedDayToSelectedDate.month &&
+      dayjs(event.from_date).year() <= mappedDayToSelectedDate.year &&
+      dayjs(event.to_date).year() >= mappedDayToSelectedDate.year,
+  ).length;
 };
 
 export const mapDayToSelectedDate = (day: CalendarDayType) => {

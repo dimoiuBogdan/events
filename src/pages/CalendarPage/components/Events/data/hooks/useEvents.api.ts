@@ -20,6 +20,7 @@ import {
   addEvent,
   getEventById,
   getEvents,
+  getEventsForCertainDay,
   removeEvent,
   updateEvent,
 } from "../services/events.services";
@@ -45,11 +46,12 @@ type ReturnProps = {
     EventEditType,
     unknown
   >;
+  eventsLengths: EventType[] | undefined;
 };
 const useEventsApi = (): ReturnProps => {
   const dispatch = useAppDispatch();
   const queryClient = useQueryClient();
-  const { getEventsForSelectedDate, selectedDate, formatDate } = useCalendar();
+  const { selectedDate, formatDate } = useCalendar();
 
   const selectedEventId = useAppSelector(
     (state) => state.eventsReducer.selectedEventId,
@@ -58,7 +60,15 @@ const useEventsApi = (): ReturnProps => {
   const { data: events, isLoading: loadingEvents } = useQuery({
     queryKey: [EVENTS_QUERY_KEYS.getSelectedDateEvents, selectedDate],
     queryFn: async () => {
-      const res = await getEventsForSelectedDate(selectedDate);
+      if (!selectedDate) return [];
+
+      const mappedDate = new Date(
+        selectedDate.year,
+        selectedDate.month,
+        selectedDate.day || -1,
+      );
+
+      const res = await getEventsForCertainDay(mappedDate);
 
       return res;
     },
@@ -205,7 +215,7 @@ const useEventsApi = (): ReturnProps => {
     },
   });
 
-  useQuery({
+  const { data: eventsLengths } = useQuery({
     queryKey: [EVENTS_QUERY_KEYS.getAllEvents],
     staleTime: Infinity,
     queryFn: async () => {
@@ -222,6 +232,7 @@ const useEventsApi = (): ReturnProps => {
 
   return {
     events,
+    eventsLengths,
     loadingEvents,
     selectedEvent,
     loadingSelectedEvent,

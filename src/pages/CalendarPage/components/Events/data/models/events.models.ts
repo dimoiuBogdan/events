@@ -17,7 +17,7 @@ export type ShortEventType = Pick<
 
 export type EventsLengthsType = {
   from_date: string;
-  events: number;
+  to_date: string;
 };
 
 export type EventEditType = Omit<EventType, "id">;

@@ -1,5 +1,7 @@
+import dayjs from "dayjs";
 import { Form, Formik, FormikHelpers } from "formik";
-import { Dispatch, FC, SetStateAction } from "react";
+import { SelectItemOptionsType } from "primereact/selectitem";
+import { Dispatch, FC, SetStateAction, useState } from "react";
 import Input from "../../../../../../common/components/Form/Input";
 import ModalWrapper from "../../../../../../common/components/ModalWrapper";
 import useCalendar from "../../../../data/hooks/useCalendar";
@@ -7,6 +9,7 @@ import useEventsApi from "../../data/hooks/useEvents.api";
 import { NewEventType } from "../../data/models/events.models";
 import { getNewEventInitialValues } from "../data/new-event.helper";
 import { newEventValidationSchema } from "../data/new-event.validation-schema";
+import NewEventModalEventsInBetween from "./NewEventModalEventsInBetween";
 import NewEventModalSubmit from "./NewEventModalSubmit";
 
 type Props = {
@@ -14,7 +17,11 @@ type Props = {
 };
 const NewEventModal: FC<Props> = ({ setShowNewEventModal }) => {
   const { formatDate, selectedDate } = useCalendar();
-  const { addEventRequest } = useEventsApi();
+  const { addEventRequest, eventsLengths } = useEventsApi();
+
+  const [eventsInBetween, setEventsInBetween] = useState<SelectItemOptionsType>(
+    [],
+  );
 
   const parsedInitialFromDate = formatDate(
     new Date(selectedDate.year, selectedDate.month, selectedDate.day),
@@ -39,6 +46,62 @@ const NewEventModal: FC<Props> = ({ setShowNewEventModal }) => {
     });
   };
 
+  const getEventsBetweenDates = (
+    from_date: string | undefined,
+    to_date: string | undefined,
+  ) => {
+    if (!from_date) return [];
+
+    const formattedFromDate = formatDate(
+      new Date(from_date),
+      "YYYY-MM-DDTHH:mm",
+    );
+    const formattedToDate = to_date
+      ? formatDate(new Date(to_date), "YYYY-MM-DDTHH:mm")
+      : undefined;
+
+    if (!eventsLengths) return [];
+
+    const eventsInBetween = eventsLengths.filter((event) => {
+      const eventFromDate = formatDate(
+        new Date(event.from_date),
+        "YYYY-MM-DDTHH:mm",
+      );
+      const eventToDate = formatDate(
+        new Date(event.to_date),
+        "YYYY-MM-DDTHH:mm",
+      );
+
+      const newEventEndsAfter =
+        dayjs(eventToDate).isAfter(formattedFromDate) ||
+        dayjs(eventToDate).isSame(formattedFromDate);
+
+      const newEventStartsBefore =
+        dayjs(eventFromDate).isBefore(formattedToDate) ||
+        dayjs(eventFromDate).isSame(formattedToDate);
+
+      if (typeof formattedToDate === "undefined")
+        return (
+          dayjs(eventFromDate).isAfter(formattedFromDate) &&
+          dayjs(eventFromDate).isSame(formattedFromDate)
+        );
+
+      return newEventEndsAfter && newEventStartsBefore;
+    });
+
+    const mappedEvents: SelectItemOptionsType = eventsInBetween.map(
+      (event) => ({
+        label: `${event.name} - ${formatDate(
+          new Date(event.from_date),
+          "DD/MM HH:mm",
+        )} => ${formatDate(new Date(event.to_date), "DD/MM HH:mm")}`,
+        value: event.id,
+      }),
+    );
+
+    setEventsInBetween(mappedEvents);
+  };
+
   return (
     <ModalWrapper handleCloseModal={handleCloseModal}>
       <Formik
@@ -47,7 +110,7 @@ const NewEventModal: FC<Props> = ({ setShowNewEventModal }) => {
         validationSchema={newEventValidationSchema}
         enableReinitialize
       >
-        {({ isSubmitting, setFieldValue }) => (
+        {({ isSubmitting, setFieldValue, values }) => (
           <Form className="flex flex-col gap-y-2">
             <div className="mb-2 text-center text-xl">Add a new event</div>
             <Input
@@ -63,9 +126,11 @@ const NewEventModal: FC<Props> = ({ setShowNewEventModal }) => {
             <Input
               id="from_date"
               name="from_date"
-              label="From Date"
+              label="From date"
               type="datetime-local"
               onChange={(value) => {
+                getEventsBetweenDates(value, values.to_date);
+
                 setFieldValue("from_date", value);
               }}
               required
@@ -74,13 +139,17 @@ const NewEventModal: FC<Props> = ({ setShowNewEventModal }) => {
             <Input
               id="to_date"
               name="to_date"
-              label="To Date"
+              label="To date"
               type="datetime-local"
               onChange={(value) => {
+                getEventsBetweenDates(values.from_date, value);
+
                 setFieldValue("to_date", value);
               }}
-              required
+              disabled={!dayjs(values.from_date).isValid()}
             />
+
+            <NewEventModalEventsInBetween eventsInBetween={eventsInBetween} />
 
             <Input
               id="description"
