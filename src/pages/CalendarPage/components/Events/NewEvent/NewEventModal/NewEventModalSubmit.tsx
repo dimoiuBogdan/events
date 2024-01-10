@@ -1,4 +1,5 @@
 import { FC } from "react";
+import Loading from "../../../../../../common/components/Loading";
 
 type Props = {
   isLoading: boolean;
@@ -13,7 +14,7 @@ const NewEventModalSubmit: FC<Props> = ({
   return (
     <div className="mt-2 flex items-center justify-center gap-x-4">
       {isLoading ? (
-        <div>Loading...</div>
+        <Loading />
       ) : (
         <>
           <button

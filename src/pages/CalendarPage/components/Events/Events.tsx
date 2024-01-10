@@ -1,3 +1,4 @@
+import Loading from "../../../../common/components/Loading";
 import Event from "./Event";
 import EventModal from "./EventModal/EventModal";
 import NewEvent from "./NewEvent/NewEvent";
@@ -10,7 +11,7 @@ const Events = () => {
     <div className="flex flex-col gap-y-4">
       <NewEvent />
       {loadingEvents ? (
-        <div>Loading...</div>
+        <Loading />
       ) : (
         events?.map((event) => <Event key={event.id} {...event} />)
       )}

@@ -1,6 +1,7 @@
 import dayjs from "dayjs";
 import { useCallback, useEffect } from "react";
 import { FaPhone } from "react-icons/fa";
+import Loading from "../../../../../common/components/Loading";
 import ModalWrapper from "../../../../../common/components/ModalWrapper";
 import {
   formatEmptyValue,
@@ -50,7 +51,7 @@ const EventModal = () => {
   return (
     <ModalWrapper handleCloseModal={handleCloseModal}>
       {loadingSelectedEvent && selectedEventId ? (
-        <div>Loading...</div>
+        <Loading />
       ) : (
         <>
           <div className="mb-6 text-center text-lg font-medium">

@@ -3,6 +3,7 @@ import { useCallback, useEffect } from "react";
 import { Link, useParams } from "react-router-dom";
 import useAuthApi from "../../../../common/components/Auth/data/hooks/useAuth.api";
 import Input from "../../../../common/components/Form/Input";
+import Loading from "../../../../common/components/Loading";
 import { AUTH_ROUTES } from "../../../../routes/routes";
 import ForgotPasswordModalNew from "./ForgotPasswordModalNew";
 import { forgotPasswordValidationSchema } from "./data/forgot-password-modal.validation-schema";
@@ -38,7 +39,7 @@ const ForgotPasswordModalForm = () => {
     }
   }, []);
 
-  if (verifyResetTokenRequest.isLoading) return <div>Loading...</div>;
+  if (verifyResetTokenRequest.isLoading) return <Loading />;
 
   if (verifyResetTokenRequest.data) return <ForgotPasswordModalNew />;
 
