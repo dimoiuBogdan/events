@@ -14,6 +14,9 @@ const App = () => {
         staleTime: 10000,
         retry: false,
       },
+      mutations: {
+        retry: false,
+      },
     },
   });
 

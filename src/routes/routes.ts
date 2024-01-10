@@ -9,4 +9,6 @@ export const CALENDAR_ROUTES = {
   BASE: "/calendar",
 };
 
+export const NOT_FOUND_ROUTE = "*";
+
 export const PROFILE_ROUTE = "/profile";
