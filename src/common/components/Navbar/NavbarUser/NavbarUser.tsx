@@ -18,3 +18,10 @@ const NavbarUser = () => {
 };
 
 export default NavbarUser;
+/*
+ * DOCS :
+ * Represents the user section inside the navbar
+ * Holds the user initials
+ * Holds the user panel
+ * Responsible for toggling the user panel
+ */

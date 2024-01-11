@@ -109,3 +109,8 @@ const AuthRegisterModalForm = () => {
 };
 
 export default AuthRegisterModalForm;
+/*
+ * DOCS :
+ * Represents the register modal form
+ * Responsible for handling credentials-based register
+ */

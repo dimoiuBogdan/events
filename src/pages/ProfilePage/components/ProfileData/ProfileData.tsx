@@ -47,3 +47,8 @@ const ProfileData = () => {
 };
 
 export default ProfileData;
+/*
+ * DOCS :
+ * Represents the profile specific data
+ * Holds multiple user related properties
+ */

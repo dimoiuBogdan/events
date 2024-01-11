@@ -36,3 +36,7 @@ const UserInitials: FC<Props> = ({ onClick }) => {
 };
 
 export default UserInitials;
+/*
+ * DOCS :
+ * Represents the user first name + last name initials or image if existing
+ */

@@ -26,3 +26,8 @@ const AuthRegisterModalFormSubmit: FC<Props> = ({ isSubmitting }) => {
 };
 
 export default AuthRegisterModalFormSubmit;
+/*
+ * DOCS :
+ * Represents the login submit section
+ * Responsible for finishing the login process
+ */

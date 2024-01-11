@@ -30,3 +30,7 @@ const CalendarDayEventsLengths: FC<Props> = ({ day }) => {
 };
 
 export default CalendarDayEventsLengths;
+/*
+ * DOCS :
+ * Represents the number of events on a certain day
+ */

@@ -1,6 +1,4 @@
-import { Tooltip } from "primereact/tooltip";
-import { FC, useEffect, useRef, useState } from "react";
-import { MAX_TITLE_WIDTH } from "../../../../common/data/constants";
+import { FC, useEffect, useRef } from "react";
 import useCalendar from "../../data/hooks/useCalendar";
 import useEvents from "./data/hooks/useEvents";
 import { ShortEventType } from "./data/models/events.models";
@@ -11,22 +9,11 @@ const Event: FC<Props> = ({ id, name, from_date, to_date }) => {
   const { formatDate } = useCalendar();
   const { setSelectedEventId } = useEvents();
 
-  const [textIsMaxWidth, setTextIsMaxWidth] = useState(false);
-
   useEffect(() => {
     return () => {
       setSelectedEventId(undefined);
     };
   }, [id, setSelectedEventId]);
-
-  useEffect(() => {
-    setTextIsMaxWidth(
-      !!(
-        titleRef?.current?.offsetWidth &&
-        titleRef.current.offsetWidth >= MAX_TITLE_WIDTH
-      ),
-    );
-  }, []);
 
   return (
     <div
@@ -43,16 +30,13 @@ const Event: FC<Props> = ({ id, name, from_date, to_date }) => {
       >
         {name}
       </div>
-      {textIsMaxWidth && (
-        <Tooltip
-          target={`#${name}`}
-          content={name}
-          className="ml-4 text-xs"
-          position="right"
-        />
-      )}
     </div>
   );
 };
 
 export default Event;
+/*
+ * DOCS :
+ * Represents the single event component
+ * Responsible for opening the specific event modal
+ */

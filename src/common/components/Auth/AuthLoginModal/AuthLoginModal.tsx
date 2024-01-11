@@ -12,3 +12,8 @@ const AuthLoginModal = () => {
 };
 
 export default AuthLoginModal;
+/*
+ * DOCS :
+ * Represents the login modal
+ * Holds the login form
+ */

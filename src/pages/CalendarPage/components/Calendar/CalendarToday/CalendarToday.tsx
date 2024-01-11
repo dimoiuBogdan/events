@@ -8,3 +8,8 @@ const CalendarToday = () => {
 };
 
 export default CalendarToday;
+/*
+ * DOCS :
+ * Represents a shortcut to the current day
+ * Responsible for navigating to the current day
+ */

@@ -12,3 +12,8 @@ const NavbarLogo = () => {
 };
 
 export default NavbarLogo;
+/*
+ * DOCS :
+ * Represents the app logo inside the navbar
+ * Responsible for redirecting to homepage
+ */

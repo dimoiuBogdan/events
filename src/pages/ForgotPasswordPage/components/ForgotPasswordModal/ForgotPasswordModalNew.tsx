@@ -78,3 +78,10 @@ const ForgotPasswordModalNew = () => {
 };
 
 export default ForgotPasswordModalNew;
+/*
+ * DOCS :
+ * Represents the main app file
+ * Holds the app routes
+ * Holds the app providers
+ * Responsible app-wide initializations
+ */

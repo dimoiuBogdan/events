@@ -16,3 +16,7 @@ const CalendarWeek: FC<Props> = ({ week }) => {
 };
 
 export default CalendarWeek;
+/*
+ * DOCS :
+ * Represents a row with dates for each week in a month
+ */

@@ -92,3 +92,8 @@ const EventModalEditForm = () => {
 };
 
 export default EventModalEditForm;
+/*
+ * DOCS :
+ * Represents the form for editing a specific event inside the modal
+ * Reponsible for editing event related informations
+ */

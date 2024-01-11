@@ -12,3 +12,8 @@ const PrivateRouteWrapper: FC<PropsWithChildren> = ({ children }) => {
 };
 
 export default PrivateRouteWrapper;
+/*
+ * DOCS :
+ * Represents the wrapper for a private route
+ * Responsible for rediricting to login page if user is not authenticated
+ */

@@ -23,3 +23,8 @@ const ModalWrapper: FC<PropsWithChildren<Props>> = ({
 };
 
 export default ModalWrapper;
+/*
+ * DOCS :
+ * Represents the wrapper for displaying modals
+ * Responsible for closing the modal
+ */

@@ -55,3 +55,9 @@ const CalendarDay: FC<Props> = ({ day, isTodayButton }) => {
 };
 
 export default CalendarDay;
+/*
+ * DOCS :
+ * Represents a day in the calendar
+ * Responsible for selecting a certain day and updating events list
+ * Responsible for displaying correct styling based on certain conditions
+ */

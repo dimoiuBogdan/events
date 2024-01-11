@@ -9,3 +9,8 @@ const ForgotPasswordPage = () => {
 };
 
 export default ForgotPasswordPage;
+/*
+ * DOCS :
+ * Represents the forgot password page
+ * Holds the forgot password modal
+ */

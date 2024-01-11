@@ -42,3 +42,9 @@ const CalendarMonthNameList: FC<Props> = ({ setIsOpened }) => {
 };
 
 export default CalendarMonthNameList;
+/*
+ * DOCS :
+ * Represents the list of months in current year
+ * Responsible for navigating between months
+ * Responsible for highlighting the selected month
+ */

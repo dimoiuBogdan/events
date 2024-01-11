@@ -18,3 +18,7 @@ const LandingPage = () => {
 };
 
 export default LandingPage;
+/*
+ * DOCS :
+ * Represents the homepage
+ */

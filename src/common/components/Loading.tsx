@@ -27,3 +27,8 @@ const Loading: FC<Props> = ({ size = "md" }) => {
 };
 
 export default Loading;
+/*
+ * DOCS :
+ * Represents the loading indicator
+ * Responsible for displaying the correct sizes
+ */

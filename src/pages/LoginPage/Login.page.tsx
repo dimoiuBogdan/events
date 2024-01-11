@@ -9,3 +9,8 @@ const LoginPage = () => {
 };
 
 export default LoginPage;
+/*
+ * DOCS :
+ * Represents the login page
+ * Holds the login modal
+ */

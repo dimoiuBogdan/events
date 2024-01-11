@@ -21,3 +21,9 @@ const Events = () => {
 };
 
 export default Events;
+/*
+ * DOCS :
+ * Represents the list of events for a certain date
+ * Holds the button for adding a new event
+ * Holds the modal for viewing and editing a specific event
+ */

@@ -11,3 +11,8 @@ const CalendarPage = () => {
 };
 
 export default CalendarPage;
+/*
+ * DOCS :
+ * Represents the calendar page
+ * Holds the calendar component and the events component
+ */

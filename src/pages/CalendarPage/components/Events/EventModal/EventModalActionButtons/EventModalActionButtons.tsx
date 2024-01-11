@@ -50,3 +50,8 @@ const EventModalActionButtons: FC<Props> = ({
 };
 
 export default EventModalActionButtons;
+/*
+ * DOCS :
+ * Represents the action buttons for the specific event modal
+ * Reponsible for removing, editing and notifying the event
+ */

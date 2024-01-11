@@ -106,3 +106,7 @@ const EventModal = () => {
 };
 
 export default EventModal;
+/*
+ * DOCS :
+ * Represents the modal for a specific event
+ */

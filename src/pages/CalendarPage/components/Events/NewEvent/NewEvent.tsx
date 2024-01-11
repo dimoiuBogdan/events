@@ -22,3 +22,9 @@ const NewEvent = () => {
 };
 
 export default NewEvent;
+/*
+ * DOCS :
+ * Represents new event button
+ * Holds the modal for a new event
+ * Responsible for opening the modal for a new event
+ */

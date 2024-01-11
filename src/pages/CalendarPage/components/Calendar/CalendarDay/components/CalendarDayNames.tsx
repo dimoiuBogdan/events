@@ -15,3 +15,7 @@ const CalendarDayNames = () => {
 };
 
 export default CalendarDayNames;
+/*
+ * DOCS :
+ * Represents the header row with day names
+ */

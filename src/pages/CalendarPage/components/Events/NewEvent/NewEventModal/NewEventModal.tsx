@@ -192,3 +192,10 @@ const NewEventModal: FC<Props> = ({ setShowNewEventModal }) => {
 };
 
 export default NewEventModal;
+/*
+ * DOCS :
+ * Represents the modal for adding a new event
+ * Holds the form for adding a new event
+ * Responsible for displaying the existing events that are in between the new event dates
+ * Responsible for submitting the creation of a new event
+ */

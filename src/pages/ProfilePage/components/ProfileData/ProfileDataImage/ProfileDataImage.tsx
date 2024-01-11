@@ -34,3 +34,9 @@ const ProfileDataImage = () => {
 };
 
 export default ProfileDataImage;
+/*
+ * DOCS :
+ * Represents the user image inside the profile page
+ * Holds the user initials for displayment
+ * Responsible for updating user image
+ */

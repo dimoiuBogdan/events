@@ -70,3 +70,8 @@ const ProfileDataProperty: FC<Props> = ({ data, label, name, type }) => {
 };
 
 export default ProfileDataProperty;
+/*
+ * DOCS :
+ * Represents the profile page data
+ * Responsible for displaying and editing a certain property if desired
+ */

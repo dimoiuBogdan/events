@@ -28,3 +28,8 @@ const Notifications = () => {
 };
 
 export default Notifications;
+/*
+ * DOCS :
+ * Represents the list of notifications
+ * Holds the notification component
+ */

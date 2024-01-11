@@ -37,3 +37,10 @@ const NewEventModalSubmit: FC<Props> = ({
 };
 
 export default NewEventModalSubmit;
+/*
+ * DOCS :
+ * Represents submit section for adding a new event modal
+ * Holds the form for adding a new event
+ * Responsible for displaying the existing events that are in between the new event dates
+ * Responsible for submitting the creation of a new event
+ */

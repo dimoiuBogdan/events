@@ -28,3 +28,9 @@ const Calendar = () => {
 };
 
 export default Calendar;
+/*
+ * DOCS :
+ * Represents the parent calendar component
+ * Responsible for displaying child calendar components
+ * Responsible for building the calendar based on "daysInSelectedMonth"
+ */

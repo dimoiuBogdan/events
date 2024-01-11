@@ -113,3 +113,8 @@ const Notification: FC<Props> = ({
 };
 
 export default Notification;
+/*
+ * DOCS :
+ * Represents the general notification popup
+ * Responsible for styling and displaying the correct information
+ */

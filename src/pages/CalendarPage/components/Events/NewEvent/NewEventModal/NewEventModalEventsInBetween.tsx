@@ -22,3 +22,7 @@ const NewEventModalEventsInBetween: FC<Props> = ({ eventsInBetween }) => {
 };
 
 export default NewEventModalEventsInBetween;
+/*
+ * DOCS :
+ * Represents the list of events that are in between the new event dates
+ */

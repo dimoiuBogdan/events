@@ -9,3 +9,8 @@ const RegisterPage = () => {
 };
 
 export default RegisterPage;
+/*
+ * DOCS :
+ * Represents the register page
+ * Holds the register modal
+ */

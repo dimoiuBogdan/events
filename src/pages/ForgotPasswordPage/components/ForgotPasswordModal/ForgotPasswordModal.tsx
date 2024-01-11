@@ -11,3 +11,7 @@ const ForgotPasswordModal = () => {
 };
 
 export default ForgotPasswordModal;
+/*
+ * DOCS :
+ * Represents the modal for the forgot password form
+ */

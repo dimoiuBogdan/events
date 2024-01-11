@@ -53,3 +53,9 @@ const EventModalActionButton: FC<Props> = ({
 };
 
 export default EventModalActionButton;
+/*
+ * DOCS :
+ * Represents the action button for the specific event modal
+ * Holds a tooltip displayed if passed
+ * Reponsible for styling and handling the correct functionality
+ */

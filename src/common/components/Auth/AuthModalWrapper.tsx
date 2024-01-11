@@ -9,3 +9,8 @@ const AuthModalWrapper: FC<PropsWithChildren> = ({ children }) => {
 };
 
 export default AuthModalWrapper;
+/*
+ * DOCS :
+ * Represents the modal wrapper for authentication view
+ * Responsible for styling the modal
+ */

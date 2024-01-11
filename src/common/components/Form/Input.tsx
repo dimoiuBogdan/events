@@ -91,3 +91,9 @@ const Input: FC<Props> = ({
 };
 
 export default Input;
+/*
+ * DOCS :
+ * Represents the generic function for an Input inside a Formik Context
+ * Holds the label, input and error message
+ * Responsible for rendering the correct styling, mandatory and error informations
+ */

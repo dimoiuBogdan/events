@@ -38,3 +38,8 @@ const EventModalEditFormActionButtons: FC<Props> = ({
 };
 
 export default EventModalEditFormActionButtons;
+/*
+ * DOCS :
+ * Represents the submitting / canceling section for editing event modal
+ * Reponsible for finishing the editing process
+ */

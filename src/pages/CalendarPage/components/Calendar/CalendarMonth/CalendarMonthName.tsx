@@ -35,3 +35,8 @@ const CalendarMonthName = () => {
 };
 
 export default CalendarMonthName;
+/*
+ * DOCS :
+ * Represents the selected month, and provides the list of months
+ * Responsible for toggling the list of months
+ */

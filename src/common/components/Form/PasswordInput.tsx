@@ -45,3 +45,8 @@ const PasswordInput: FC<Props> = ({
 };
 
 export default PasswordInput;
+/*
+ * DOCS :
+ * Represents the password specific input
+ * Responsible for handling password logic and visibility
+ */

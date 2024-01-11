@@ -83,3 +83,8 @@ const AuthLoginModalForm = () => {
 };
 
 export default AuthLoginModalForm;
+/*
+ * DOCS :
+ * Represents the login modal form
+ * Responsible for handling credentials-based login
+ */
