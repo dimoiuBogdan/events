@@ -1,4 +1,4 @@
-import { FC, useEffect, useRef } from "react";
+import { FC, useRef } from "react";
 import useCalendar from "../../data/hooks/useCalendar";
 import useEvents from "./data/hooks/useEvents";
 import { ShortEventType } from "./data/models/events.models";
@@ -8,12 +8,6 @@ const Event: FC<Props> = ({ id, name, from_date, to_date }) => {
   const titleRef = useRef<HTMLDivElement>(null);
   const { formatDate } = useCalendar();
   const { setSelectedEventId } = useEvents();
-
-  useEffect(() => {
-    return () => {
-      setSelectedEventId(undefined);
-    };
-  }, [id, setSelectedEventId]);
 
   return (
     <div

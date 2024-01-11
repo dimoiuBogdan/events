@@ -2,6 +2,7 @@ import { PrimeReactProvider } from "primereact/api";
 import { QueryClient, QueryClientProvider } from "react-query";
 import { Provider as ReduxProvider } from "react-redux";
 import { BrowserRouter } from "react-router-dom";
+
 import Navbar from "./common/components/Navbar/Navbar";
 import Notifications from "./common/components/Notifications.tsx/Notifications";
 import { handleAxiosInterceptor } from "./common/data/helpers/axios.helper";

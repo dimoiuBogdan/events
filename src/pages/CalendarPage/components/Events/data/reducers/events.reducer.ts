@@ -21,11 +21,6 @@ export const eventsReducer: Reducer<
         ...state,
         selectedEventId: action.payload.id,
       };
-    case getType(EventsReducerActions.setEventsLengths):
-      return {
-        ...state,
-        eventsLengths: action.payload,
-      };
     case getType(EventsReducerActions.setEditEventMode):
       return {
         ...state,

@@ -7,16 +7,19 @@ import {
 } from "../models/events.models";
 
 /**
- * Retrieves events for a certain day.
+ * Retrieves events for a specific day.
  *
- * @param {Date} date - The specific date for which to retrieve events.
- * @return {Promise<EventType[]>} - A promise that resolves to an array of event types.
+ * @param {Date} date - The date for which to retrieve events.
+ * @param {AbortSignal | undefined} [signal] - A signal to abort the request.
+ * @returns {Promise<EventType[]>} - A promise that resolves to an array of events for the specified date.
  */
 export const getEventsForCertainDay = async (
   date: Date,
+  signal: AbortSignal | undefined,
 ): Promise<EventType[]> => {
   const res = await axios.get(`${BASE_API_URL}/events/date`, {
     params: { date },
+    signal,
   });
 
   return res.data;
@@ -24,11 +27,15 @@ export const getEventsForCertainDay = async (
 
 /**
  * Retrieves a list of events from the server.
- *
+ * @param {AbortSignal | undefined} [signal] - A signal to abort the request.
  * @returns {Promise<EventType[]>} A promise that resolves to an array of EventType objects representing the events.
  */
-export const getEvents = async (): Promise<EventType[]> => {
-  const res = await axios.get(`${BASE_API_URL}/events`);
+export const getEvents = async (
+  signal: AbortSignal | undefined,
+): Promise<EventType[]> => {
+  const res = await axios.get(`${BASE_API_URL}/events`, {
+    signal,
+  });
 
   return res.data;
 };
@@ -37,12 +44,16 @@ export const getEvents = async (): Promise<EventType[]> => {
  * Retrieves an event by its ID.
  *
  * @param {string} id - The ID of the event to retrieve.
+ * @param {AbortSignal | undefined} [signal] - A signal to abort the request.
  * @return {Promise<EventType | undefined>} The retrieved event data, or undefined if the event does not exist.
  */
 export const getEventById = async (
   id: string,
+  signal: AbortSignal | undefined,
 ): Promise<EventType | undefined> => {
-  const res = await axios.get(`${BASE_API_URL}/events/${id}`);
+  const res = await axios.get(`${BASE_API_URL}/events/${id}`, {
+    signal,
+  });
 
   return res.data;
 };

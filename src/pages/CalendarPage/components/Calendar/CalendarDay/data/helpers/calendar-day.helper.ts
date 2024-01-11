@@ -33,7 +33,7 @@ export const getIsSelected = (
 };
 
 export const getCurrentDayEventsLengths = (
-  eventsLengths: EventsLengthsType[],
+  eventsLengths: EventsLengthsType[] | undefined,
   day: CalendarDayType,
 ) => {
   if (!eventsLengths || !day) return 0;

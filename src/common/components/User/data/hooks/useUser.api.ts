@@ -21,11 +21,10 @@ const useUserApi = (): ReturnProps => {
 
   const { data: userData } = useQuery({
     queryKey: [USER_QUERY_KEYS.getUserData, userId],
-    staleTime: Infinity,
-    queryFn: async () => {
+    queryFn: async ({ signal }) => {
       if (!userId) return;
 
-      const res = await getUserById(userId);
+      const res = await getUserById(userId, signal);
 
       return res;
     },
@@ -37,12 +36,10 @@ const useUserApi = (): ReturnProps => {
 
   const { data: userProfileImage, isLoading: loadingProfileImage } = useQuery({
     queryKey: [USER_QUERY_KEYS.getUserProfileImage, userId],
-    staleTime: Infinity,
-    retry: false,
-    queryFn: async () => {
+    queryFn: async ({ signal }) => {
       if (!userId) return;
 
-      const res = await getUserProfileImage(userId);
+      const res = await getUserProfileImage(userId, signal);
 
       if (!res) return;
 

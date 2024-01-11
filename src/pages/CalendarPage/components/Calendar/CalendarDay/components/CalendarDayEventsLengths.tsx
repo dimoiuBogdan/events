@@ -1,15 +1,12 @@
 import { FC } from "react";
 import { cn } from "../../../../../../common/data/helpers/helpers";
-import { useAppSelector } from "../../../../../../redux/hooks";
 import { CalendarDayType } from "../../../../data/models/calendar.page.models";
-import { EventsLengthsType } from "../../../Events/data/models/events.models";
+import useEventsApi from "../../../Events/data/hooks/useEvents.api";
 import { getCurrentDayEventsLengths } from "../data/helpers/calendar-day.helper";
 
 type Props = { day: CalendarDayType };
 const CalendarDayEventsLengths: FC<Props> = ({ day }) => {
-  const eventsLengths = useAppSelector<EventsLengthsType[]>(
-    (s) => s.eventsReducer.eventsLengths,
-  );
+  const { eventsLengths } = useEventsApi();
 
   const currentDayEventsLengths = getCurrentDayEventsLengths(
     eventsLengths,

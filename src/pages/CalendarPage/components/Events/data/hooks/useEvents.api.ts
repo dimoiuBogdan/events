@@ -13,9 +13,9 @@ import { mapEvents } from "../helpers/events.helper";
 import {
   EventEditType,
   EventType,
+  EventsLengthsType,
   NewEventType,
 } from "../models/events.models";
-import { EventsReducerActions } from "../reducers/events.reducer.actions";
 import {
   addEvent,
   getEventById,
@@ -46,7 +46,7 @@ type ReturnProps = {
     EventEditType,
     unknown
   >;
-  eventsLengths: EventType[] | undefined;
+  eventsLengths: EventsLengthsType[] | undefined;
 };
 const useEventsApi = (): ReturnProps => {
   const dispatch = useAppDispatch();
@@ -59,7 +59,7 @@ const useEventsApi = (): ReturnProps => {
 
   const { data: events, isLoading: loadingEvents } = useQuery({
     queryKey: [EVENTS_QUERY_KEYS.getSelectedDateEvents, selectedDate],
-    queryFn: async () => {
+    queryFn: async ({ signal }) => {
       if (!selectedDate) return [];
 
       const mappedDate = new Date(
@@ -68,7 +68,7 @@ const useEventsApi = (): ReturnProps => {
         selectedDate.day || -1,
       );
 
-      const res = await getEventsForCertainDay(mappedDate);
+      const res = await getEventsForCertainDay(mappedDate, signal);
 
       return res;
     },
@@ -76,13 +76,14 @@ const useEventsApi = (): ReturnProps => {
 
   const { data: selectedEvent, isLoading: loadingSelectedEvent } = useQuery({
     queryKey: [EVENTS_QUERY_KEYS.getSpecificEvent, selectedEventId],
-    queryFn: async () => {
+    queryFn: async ({ signal }) => {
       if (!selectedEventId) return;
 
-      const res = await getEventById(selectedEventId);
+      const res = await getEventById(selectedEventId, signal);
 
       return res;
     },
+    enabled: !!selectedEventId,
   });
 
   const addEventRequest = useMutation({
@@ -217,17 +218,12 @@ const useEventsApi = (): ReturnProps => {
 
   const { data: eventsLengths } = useQuery({
     queryKey: [EVENTS_QUERY_KEYS.getAllEvents],
-    staleTime: Infinity,
-    queryFn: async () => {
-      const res = await getEvents();
+    queryFn: async ({ signal }) => {
+      const res = await getEvents(signal);
 
       return res;
     },
-    onSuccess: (data) => {
-      const mappedEventsLengths = mapEvents(data);
-
-      dispatch(EventsReducerActions.setEventsLengths(mappedEventsLengths));
-    },
+    select: (data) => mapEvents(data),
   });
 
   return {
