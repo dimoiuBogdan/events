@@ -1,5 +1,5 @@
 import { Link } from "react-router-dom";
-import { CALENDAR_ROUTES } from "../../../routes/routes";
+import { CALENDAR_ROUTES } from "src/routes/routes";
 import useAuthApi from "../Auth/data/hooks/useAuth.api";
 import NavbarLogo from "./NavbarLogo";
 import NavbarUser from "./NavbarUser/NavbarUser";

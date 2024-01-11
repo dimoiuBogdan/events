@@ -1,4 +1,4 @@
-import Loading from "../../../../common/components/Loading";
+import Loading from "src/common/components/Loading";
 import Event from "./Event";
 import EventModal from "./EventModal/EventModal";
 import NewEvent from "./NewEvent/NewEvent";
