@@ -32,6 +32,7 @@ const AuthLoginModalForm = () => {
   return (
     <Formik
       enableReinitialize
+      validateOnChange={false}
       validationSchema={loginValidationSchema}
       initialValues={loginInitialValues}
       onSubmit={(values, { setSubmitting, resetForm }) =>

@@ -39,6 +39,7 @@ const ForgotPasswordModalNew = () => {
   return (
     <Formik
       enableReinitialize
+      validateOnChange={false}
       validationSchema={forgotPasswordNewValidationSchema}
       initialValues={ForgotPasswordNewInitialValues}
       onSubmit={(values, { setSubmitting, resetForm }) =>

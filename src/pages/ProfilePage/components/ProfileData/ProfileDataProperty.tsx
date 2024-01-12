@@ -37,7 +37,7 @@ const ProfileDataProperty: FC<Props> = ({ data, label, name, type }) => {
   };
 
   return (
-    <div className="flex items-center gap-x-3">
+    <div className="flex items-baseline gap-x-3">
       {label} :
       {!isEditMode ? (
         <span

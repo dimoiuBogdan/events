@@ -33,6 +33,7 @@ const AuthRegisterModalForm = () => {
   return (
     <Formik
       enableReinitialize
+      validateOnChange={false}
       validationSchema={registerValidationSchema}
       initialValues={registerInitialValues}
       onSubmit={(values, { setSubmitting, resetForm }) =>

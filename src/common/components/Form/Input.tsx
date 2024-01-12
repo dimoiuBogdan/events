@@ -37,7 +37,7 @@ const Input: FC<Props> = ({
   const fieldValue = getFieldMeta(name).value as string;
 
   return (
-    <div className={cn("relative", wrapperClassName)}>
+    <div className={cn("relative mb-3", wrapperClassName)}>
       {label && (
         <label className="text-zinc-200" htmlFor={name}>
           {label} {required && <span className="text-red-400">*</span>}

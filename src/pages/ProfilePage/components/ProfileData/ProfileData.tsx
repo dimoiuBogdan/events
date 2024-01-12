@@ -13,6 +13,7 @@ const ProfileData = () => {
   return (
     <Formik
       enableReinitialize
+      validateOnChange={false}
       initialValues={getProfileDataInitialValues(userData)}
       onSubmit={() => {}}
       validationSchema={profileDataValidationSchema}

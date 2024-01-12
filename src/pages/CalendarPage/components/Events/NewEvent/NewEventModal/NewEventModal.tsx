@@ -109,9 +109,10 @@ const NewEventModal: FC<Props> = ({ setShowNewEventModal }) => {
         onSubmit={handleCreateEvent}
         validationSchema={newEventValidationSchema}
         enableReinitialize
+        validateOnChange={false}
       >
         {({ isSubmitting, setFieldValue, values }) => (
-          <Form className="flex flex-col gap-y-2">
+          <Form className="flex flex-col gap-y-1">
             <div className="mb-2 text-center text-xl">Add a new event</div>
             <Input
               id="name"
