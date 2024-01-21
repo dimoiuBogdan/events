@@ -1,9 +1,9 @@
 import { Form, Formik } from "formik";
 import Input from "../../../../../../common/components/Form/Input";
+import { eventValidationSchema } from "../../NewEvent/data/event.validation-schema";
 import useEventsApi from "../../data/hooks/useEvents.api";
 import EventModalEditFormActionButtons from "./EventModalEditFormActionButtons";
 import { getEventModalEditFormInitialValues } from "./data/helpers/event-modal-edit-form.helper";
-import { eventModalEditFormValidationSchema } from "./data/helpers/event-modal-edit-form.validation-schema";
 
 const EventModalEditForm = () => {
   const { selectedEvent, updateEventRequest } = useEventsApi();
@@ -14,7 +14,7 @@ const EventModalEditForm = () => {
     <Formik
       enableReinitialize
       validateOnChange={false}
-      validationSchema={eventModalEditFormValidationSchema}
+      validationSchema={eventValidationSchema}
       initialValues={getEventModalEditFormInitialValues(selectedEvent)}
       onSubmit={(values, { setSubmitting, resetForm }) => {
         updateEventRequest.mutate(values, {
@@ -56,7 +56,6 @@ const EventModalEditForm = () => {
             onChange={(value) => {
               setFieldValue("to_date", value);
             }}
-            required
           />
           <Input
             id="description"

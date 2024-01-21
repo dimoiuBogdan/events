@@ -203,6 +203,7 @@ const useEventsApi = (): ReturnProps => {
 
       queryClient.invalidateQueries(EVENTS_QUERY_KEYS.getSelectedDateEvents);
       queryClient.invalidateQueries(EVENTS_QUERY_KEYS.getSpecificEvent);
+      queryClient.invalidateQueries(EVENTS_QUERY_KEYS.getAllEvents);
     },
     onError: (err: AxiosError) => {
       dispatch(

@@ -7,8 +7,8 @@ import ModalWrapper from "../../../../../../common/components/ModalWrapper";
 import useCalendar from "../../../../data/hooks/useCalendar";
 import useEventsApi from "../../data/hooks/useEvents.api";
 import { NewEventType } from "../../data/models/events.models";
+import { eventValidationSchema } from "../data/event.validation-schema";
 import { getNewEventInitialValues } from "../data/new-event.helper";
-import { newEventValidationSchema } from "../data/new-event.validation-schema";
 import NewEventModalEventsInBetween from "./NewEventModalEventsInBetween";
 import NewEventModalSubmit from "./NewEventModalSubmit";
 
@@ -67,10 +67,9 @@ const NewEventModal: FC<Props> = ({ setShowNewEventModal }) => {
         new Date(event.from_date),
         "YYYY-MM-DDTHH:mm",
       );
-      const eventToDate = formatDate(
-        new Date(event.to_date),
-        "YYYY-MM-DDTHH:mm",
-      );
+      const eventToDate = event.to_date
+        ? formatDate(new Date(event.to_date), "YYYY-MM-DDTHH:mm")
+        : undefined;
 
       const newEventEndsAfter =
         dayjs(eventToDate).isAfter(formattedFromDate) ||
@@ -94,7 +93,11 @@ const NewEventModal: FC<Props> = ({ setShowNewEventModal }) => {
         label: `${event.name} - ${formatDate(
           new Date(event.from_date),
           "DD/MM HH:mm",
-        )} => ${formatDate(new Date(event.to_date), "DD/MM HH:mm")}`,
+        )} ${
+          event.to_date
+            ? ` => ${formatDate(new Date(event.to_date), "DD/MM HH:mm")}`
+            : ""
+        }`,
         value: event.id,
       }),
     );
@@ -107,7 +110,7 @@ const NewEventModal: FC<Props> = ({ setShowNewEventModal }) => {
       <Formik
         initialValues={getNewEventInitialValues(parsedInitialFromDate)}
         onSubmit={handleCreateEvent}
-        validationSchema={newEventValidationSchema}
+        validationSchema={eventValidationSchema}
         enableReinitialize
         validateOnChange={false}
       >

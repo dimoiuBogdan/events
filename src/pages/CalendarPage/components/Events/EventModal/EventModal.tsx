@@ -63,7 +63,7 @@ const EventModal = () => {
             <div className="flex flex-col gap-y-2">
               <div>
                 Date: {formatDate(selectedEvent.from_date, "DD.MM.YYYY")}
-                {!sameDayEvent && (
+                {!sameDayEvent && selectedEvent.to_date && (
                   <span>
                     {" "}
                     - {formatDate(selectedEvent.to_date, "DD.MM.YYYY")}
@@ -72,7 +72,8 @@ const EventModal = () => {
               </div>
               <div>
                 Time: {formatDate(selectedEvent.from_date, "HH:mm")} -{" "}
-                {formatDate(selectedEvent.to_date, "HH:mm")}
+                {selectedEvent.to_date &&
+                  formatDate(selectedEvent.to_date, "HH:mm")}
               </div>
               <div>Location: {formatEmptyValue(selectedEvent.location)}</div>
               <div className="flex items-center gap-x-1">

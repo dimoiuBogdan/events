@@ -9,14 +9,19 @@ const Event: FC<Props> = ({ id, name, from_date, to_date }) => {
   const { formatDate } = useCalendar();
   const { setSelectedEventId } = useEvents();
 
+  const getEventDate = () => {
+    const fromDate = formatDate(from_date, "HH:mm");
+    const toDate = to_date ? ` - ${formatDate(to_date, "HH:mm")}` : "";
+
+    return `${fromDate} ${toDate}`;
+  };
+
   return (
     <div
       onClick={() => setSelectedEventId(id)}
       className="flex cursor-pointer items-center justify-between gap-x-2 rounded-md bg-indigo-400 px-4 py-1 shadow-md hover:bg-indigo-500"
     >
-      <div>
-        {formatDate(from_date, "HH:mm")} - {formatDate(to_date, "HH:mm")}
-      </div>
+      <div>{getEventDate()}</div>
       <div
         ref={titleRef}
         id={name}

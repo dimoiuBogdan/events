@@ -1,23 +1,7 @@
 import * as yup from "yup";
-import { MAX_INPUT_LENGTHS } from "../../../../../../../../common/data/constants";
+import { MAX_INPUT_LENGTHS } from "../../../../../../common/data/constants";
 
-export const eventModalEditFormValidationSchema = yup.object().shape({
-  from_date: yup
-    .date()
-    .required("From date is required")
-    .typeError("From must be a date"),
-  to_date: yup
-    .date()
-    .required("To date is required")
-    .typeError("To must be a date"),
-  description: yup
-    .string()
-    .typeError("Description must be text")
-    .optional()
-    .max(
-      MAX_INPUT_LENGTHS.LONG,
-      `Description must be less than ${MAX_INPUT_LENGTHS.LONG} characters`,
-    ),
+export const eventValidationSchema = yup.object().shape({
   name: yup
     .string()
     .required("Name is required")
@@ -25,6 +9,31 @@ export const eventModalEditFormValidationSchema = yup.object().shape({
     .max(
       MAX_INPUT_LENGTHS.MEDIUM,
       `Name must be less than ${MAX_INPUT_LENGTHS.MEDIUM} characters`,
+    ),
+  from_date: yup
+    .date()
+    .required("From date is required")
+    .typeError("From must be a date")
+    .when("to_date", (to_date, schema) => {
+      if (to_date[0]) {
+        return schema.max(
+          yup.ref("to_date"),
+          "From date must be before to date",
+        );
+      }
+      return schema;
+    }),
+  to_date: yup
+    .date()
+    .typeError("To must be a date")
+    .min(yup.ref("from_date"), "To date must be after from date"),
+  description: yup
+    .string()
+    .typeError("Description must be text")
+    .optional()
+    .max(
+      MAX_INPUT_LENGTHS.LONG,
+      `Description must be less than ${MAX_INPUT_LENGTHS.LONG} characters`,
     ),
   contact: yup
     .string()
