@@ -13,20 +13,17 @@ export const eventValidationSchema = yup.object().shape({
   from_date: yup
     .date()
     .required("From date is required")
-    .typeError("From must be a date")
-    .when("to_date", (to_date, schema) => {
-      if (to_date[0]) {
-        return schema.max(
-          yup.ref("to_date"),
-          "From date must be before to date",
-        );
-      }
-      return schema;
-    }),
+    .typeError("From date must be a valid date"),
   to_date: yup
     .date()
-    .typeError("To must be a date")
-    .min(yup.ref("from_date"), "To date must be after from date"),
+    .default(undefined)
+    .typeError("To date must be a valid date")
+    .when(
+      "from_date",
+      (from_date, yup) =>
+        from_date &&
+        yup.min(from_date, "End date can not be before start time"),
+    ),
   description: yup
     .string()
     .typeError("Description must be text")

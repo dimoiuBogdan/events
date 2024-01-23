@@ -60,18 +60,19 @@ const useEventsApi = (): ReturnProps => {
   const { data: events, isLoading: loadingEvents } = useQuery({
     queryKey: [EVENTS_QUERY_KEYS.getSelectedDateEvents, selectedDate],
     queryFn: async ({ signal }) => {
-      if (!selectedDate) return [];
+      if (!selectedDate.day) return [];
 
       const mappedDate = new Date(
         selectedDate.year,
         selectedDate.month,
-        selectedDate.day || -1,
+        selectedDate.day,
       );
 
       const res = await getEventsForCertainDay(mappedDate, signal);
 
       return res;
     },
+    enabled: !!selectedDate.day,
   });
 
   const { data: selectedEvent, isLoading: loadingSelectedEvent } = useQuery({

@@ -17,7 +17,7 @@ const EventModalEditFormActionButtons: FC<Props> = ({
     ? "Saving changes..."
     : !dirty
       ? "No changas made"
-      : "Save";
+      : "";
 
   return (
     <div className="flex items-center justify-center gap-x-8">

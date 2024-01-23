@@ -71,9 +71,9 @@ const EventModal = () => {
                 )}
               </div>
               <div>
-                Time: {formatDate(selectedEvent.from_date, "HH:mm")} -{" "}
+                Time: {formatDate(selectedEvent.from_date, "HH:mm")}
                 {selectedEvent.to_date &&
-                  formatDate(selectedEvent.to_date, "HH:mm")}
+                  ` - ${formatDate(selectedEvent.to_date, "HH:mm")}`}
               </div>
               <div>Location: {formatEmptyValue(selectedEvent.location)}</div>
               <div className="flex items-center gap-x-1">

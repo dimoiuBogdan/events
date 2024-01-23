@@ -13,7 +13,6 @@ const EventModalEditForm = () => {
   return (
     <Formik
       enableReinitialize
-      validateOnChange={false}
       validationSchema={eventValidationSchema}
       initialValues={getEventModalEditFormInitialValues(selectedEvent)}
       onSubmit={(values, { setSubmitting, resetForm }) => {

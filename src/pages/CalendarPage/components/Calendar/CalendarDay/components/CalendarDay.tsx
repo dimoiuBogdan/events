@@ -31,6 +31,8 @@ const CalendarDay: FC<Props> = ({ day, isTodayButton }) => {
 
     if (isSelected) {
       handleChangeSelectedDate({
+        year: undefined,
+        month: undefined,
         day: undefined,
       });
     } else {

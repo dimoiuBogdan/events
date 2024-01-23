@@ -38,18 +38,32 @@ export const getCurrentDayEventsLengths = (
 ) => {
   if (!eventsLengths || !day) return 0;
 
-  const mappedDayToSelectedDate = mapDayToSelectedDate(day);
+  const {
+    day: mappedDay,
+    month: mappedMonth,
+    year: mappedYear,
+  } = mapDayToSelectedDate(day);
 
-  return eventsLengths.filter(
-    (event) =>
-      mappedDayToSelectedDate.day &&
-      dayjs(event.from_date).date() <= mappedDayToSelectedDate.day &&
-      dayjs(event.to_date).date() >= mappedDayToSelectedDate.day &&
-      dayjs(event.from_date).month() <= mappedDayToSelectedDate.month &&
-      dayjs(event.to_date).month() >= mappedDayToSelectedDate.month &&
-      dayjs(event.from_date).year() <= mappedDayToSelectedDate.year &&
-      dayjs(event.to_date).year() >= mappedDayToSelectedDate.year,
-  ).length;
+  return eventsLengths.filter((event) => {
+    if (event.to_date) {
+      return (
+        mappedDay &&
+        dayjs(event.from_date).date() <= mappedDay &&
+        dayjs(event.to_date).date() >= mappedDay &&
+        dayjs(event.from_date).month() <= mappedMonth &&
+        dayjs(event.to_date).month() >= mappedMonth &&
+        dayjs(event.from_date).year() <= mappedYear &&
+        dayjs(event.to_date).year() >= mappedYear
+      );
+    } else {
+      return (
+        mappedDay &&
+        dayjs(event.from_date).date() === mappedDay &&
+        dayjs(event.from_date).month() === mappedMonth &&
+        dayjs(event.from_date).year() === mappedYear
+      );
+    }
+  }).length;
 };
 
 export const mapDayToSelectedDate = (day: CalendarDayType) => {

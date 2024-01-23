@@ -1,19 +1,10 @@
-import { useAppDispatch, useAppSelector } from "../../redux/hooks";
-import { LandingPageReducerActions } from "./data/reducers/landing.page.reducer.actions";
+import { Link } from "react-router-dom";
 
 const LandingPage = () => {
-  const dispatch = useAppDispatch();
-
-  const test = useAppSelector<string>((state) => state.landingPageReducer.data);
-
   return (
-    <div
-      onClick={() => {
-        dispatch(LandingPageReducerActions.setData("pateu"));
-      }}
-    >
-      Landing.page - {test}
-    </div>
+    <Link to="/calendar" className="text-2xl">
+      Navigate to <span className="text-indigo-400">calendar</span>
+    </Link>
   );
 };
 
